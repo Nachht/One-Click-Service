@@ -1,0 +1,472 @@
+/* Elimina los márgenes y rellenos predeterminados de todos los elementos */
+/* box-sizing hace que el padding y border se incluyan dentro del ancho y alto */
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+
+}
+
+
+/* Estilos generales de la página */
+body{
+
+/* Fuente principal del sitio */
+font-family:'Nunito',sans-serif;
+
+/* Color de fondo de la página */
+background:#faf9ff;
+
+/* Color principal del texto */
+color:#1F1F1F;
+
+}
+
+/* =====================================
+   MENÚ DESPLEGABLE
+===================================== */
+
+/* Botón de la casita */
+
+.menu-btn{
+
+position:fixed;
+
+top:20px;
+
+left:20px;
+
+width:60px;
+
+height:60px;
+
+background:#6C2BD9;
+
+color:white;
+
+font-size:30px;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+cursor:pointer;
+
+z-index:1000;
+
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+
+}
+
+
+
+/* Menú oculto */
+
+.menu{
+
+position:fixed;
+
+top:0;
+
+left:-250px;
+
+width:250px;
+
+height:100vh;
+
+background:#4C1D95;
+
+display:flex;
+
+flex-direction:column;
+
+padding-top:100px;
+
+transition:.4s;
+
+z-index:999;
+
+}
+
+
+
+/* Cuando se abre */
+
+.menu.activo{
+
+left:0;
+
+}
+
+
+
+/* Enlaces */
+
+.menu a{
+
+color:white;
+
+text-decoration:none;
+
+padding:18px 30px;
+
+font-size:18px;
+
+font-weight:700;
+
+transition:.3s;
+
+}
+
+
+
+/* Hover */
+
+.menu a:hover{
+
+background:#6C2BD9;
+
+}
+
+
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media(max-width:900px){
+
+.contenido{
+
+flex-direction:column;
+
+}
+
+.imagen{
+
+width:80%;
+
+}
+
+.lista{
+
+width:100%;
+
+}
+
+.titulo h1{
+
+font-size:45px;
+
+}
+
+.titulo p{
+
+font-size:18px;
+
+}
+
+}
+
+/* Contenedor principal de la sección FAQ */
+.faq{
+
+/* Ocupa el 90% del ancho disponible */
+width:90%;
+
+/* Ancho máximo para pantallas grandes */
+max-width:1300px;
+
+/* Centra el contenedor horizontalmente */
+margin:auto;
+
+/* Espaciado superior e inferior */
+padding:50px 0;
+
+}
+
+
+
+/* Contenedor del título principal */
+.titulo{
+
+/* Centra el texto */
+text-align:center;
+
+}
+
+
+
+/* Etiqueta "DUDAS RESUELTAS" */
+.titulo span{
+
+/* Fondo turquesa */
+background:#00FCF8;
+
+/* Espaciado interno */
+padding:12px 30px;
+
+/* Bordes redondeados */
+border-radius:30px;
+
+/* Texto más grueso */
+font-weight:800;
+
+}
+
+
+
+/* Título principal */
+.titulo h1{
+
+/* Tamaño grande */
+font-size:70px;
+
+/* Espaciado superior e inferior */
+margin:25px 0;
+
+}
+
+
+
+/* Color de la palabra destacada */
+.titulo b{
+
+color:#6C2BD9;
+
+}
+
+
+
+/* Descripción debajo del título */
+.titulo p{
+
+font-size:22px;
+color:#555;
+
+}
+
+
+
+/* Contenedor que organiza imagen y preguntas */
+.contenido{
+
+/* Coloca los elementos uno al lado del otro */
+display:flex;
+
+/* Centra verticalmente */
+align-items:center;
+
+/* Espacio entre imagen y preguntas */
+gap:60px;
+
+/* Separación con respecto al título */
+margin-top:50px;
+
+}
+
+
+
+/* Contenedor de la imagen */
+.imagen{
+
+/* Ocupa el 40% del espacio */
+width:80%;
+
+}
+
+
+
+/* Imagen responsiva */
+.imagen img{
+
+/* Ocupa todo el ancho del contenedor */
+width:100%;
+
+}
+
+
+
+/* Contenedor de las preguntas */
+.lista{
+
+/* Ocupa el 60% restante */
+width:60%;
+
+}
+
+
+
+/* Tarjeta individual de pregunta */
+.item{
+
+/* Fondo blanco */
+background:white;
+
+/* Espaciado interno */
+padding:20px;
+
+/* Bordes redondeados */
+border-radius:22px;
+
+/* Separación entre tarjetas */
+margin-bottom:18px;
+
+/* Sombra suave */
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+}
+
+
+
+/* Encabezado de cada pregunta */
+.pregunta{
+
+/* Organiza icono, texto y botón en fila */
+display:flex;
+
+/* Centrado vertical */
+align-items:center;
+
+/* Espacio entre elementos */
+gap:20px;
+
+}
+
+
+
+/* Texto de la pregunta */
+.pregunta h3{
+
+/* Ocupa el espacio disponible */
+flex:1;
+
+/* Tamaño del texto */
+font-size:22px;
+
+}
+
+
+
+/* Estilo general de los iconos circulares */
+.icono{
+
+width:55px;
+height:55px;
+
+/* Forma circular */
+border-radius:50%;
+
+/* Centra el contenido */
+display:flex;
+align-items:center;
+justify-content:center;
+
+/* Tamaño del símbolo */
+font-size:28px;
+
+/* Color del texto */
+color:white;
+
+/* Texto en negrita */
+font-weight:bold;
+
+}
+
+
+
+/* Icono color turquesa */
+.azul{
+
+background:#00FCF8;
+color:#1F1F1F;
+
+}
+
+
+/* Icono color morado */
+.morado{
+
+background:#6C2BD9;
+
+}
+
+
+/* Icono color fucsia */
+.rosa{
+
+background:#EC4899;
+
+}
+
+
+
+/* Botón de expandir y contraer */
+button{
+
+/* Sin borde */
+border:none;
+
+/* Fondo transparente */
+background:none;
+
+/* Tamaño de la flecha */
+font-size:30px;
+
+/* Color de la flecha */
+color:#4C1D95;
+
+}
+
+
+
+/* Respuesta de cada pregunta */
+.item p{
+
+/* Oculta la respuesta inicialmente */
+display:none;
+
+/* Espaciado interno */
+padding:20px;
+
+/* Tamaño del texto */
+font-size:18px;
+
+}
+
+
+
+/* Muestra la respuesta cuando la tarjeta está activa */
+.item.activo p{
+
+display:block;
+
+}
+
+
+
+/* Sección final de contacto */
+.contacto{
+
+/* Separación superior */
+margin-top:40px;
+
+/* Centra el texto */
+text-align:center;
+
+}
+
+
+
+/* Resalta la palabra "Contáctanos" */
+.contacto strong{
+
+color:#6C2BD9;
+font-size:22px;
+
+}

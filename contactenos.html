@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contáctenos</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="contactenos.css">
+</head>
+
+<body>
+
+<!-- Botón menú -->
+<div class="menu-btn" id="menuBtn">
+  <img src="img/logo.png"alt="Logo One Click Service"> 
+</div>
+
+<!-- Menú lateral -->
+<nav class="menu" id="menu">
+<a href="index.html">Inicio</a>
+<a href="nosotros.html">Sobre Nosotros</a>
+<a href="servicios.html">Servicios</a>
+<a href="Preguntas.html">Preguntas Frecuentes</a>
+<a href="contactenos.html">Contáctenos</a>
+</nav>
+
+<section class="contacto">
+
+<h1>Contáctenos</h1>
+
+<p class="descripcion">
+Estamos aquí para ayudarte.
+<br>
+Escríbenos y te responderemos lo antes posible.
+</p>
+
+<div class="contenedor">
+
+<!-- IZQUIERDA -->
+<div class="informacion">
+
+<div class="imagen">
+<img src="img/contacto.png" alt="Sobre de contacto">
+</div>
+
+<div class="datos">
+<p>📧 Correo electrónico<br>oneclickservice@gmail.com</p>
+<p>☎ Teléfono<br>+57 3001234567</p>
+<p>📍 Ubicación<br>Bogotá, Colombia</p>
+</div>
+
+</div>
+
+<!-- DERECHA FORMULARIO -->
+<div class="formulario">
+
+<form id="formulario">
+
+<label>Nombre</label>
+<input type="text" id="nombre" placeholder="Tu Nombre">
+<small id="errorNombre"></small>
+
+<label>Correo electrónico</label>
+<input type="email" id="correo" placeholder="Tu correo">
+<small id="errorCorreo"></small>
+
+<label>Teléfono</label>
+<input type="text" id="telefono" placeholder="Tu teléfono">
+<small id="errorTelefono"></small>
+
+<label>Mensaje</label>
+<textarea id="mensaje" placeholder="Escribe tu mensaje"></textarea>
+<small id="errorMensaje"></small>
+
+<button type="submit">Enviar Mensaje</button>
+
+</form>
+
+</div>
+
+</div>
+
+</section>
+
+<script src="contactenos.js"></script>
+
+</body>
+</html>
