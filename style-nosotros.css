@@ -100,6 +100,60 @@
     padding: 20px;
 }
 
+/* ================= MENÚ ================= */
+
+.menu-btn{
+position:fixed;
+top:20px;
+left:20px;
+width:70px;
+height:70px;
+background:transparent;
+border-radius:0;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+z-index:1000;
+box-shadow:none;
+overflow:hidden;
+padding:10px;
+}
+
+.menu-btn img{
+width:100px;
+height:100px;
+object-fit:contain;
+}
+
+.menu{
+position:fixed;
+top:0;
+left:-250px;
+width:250px;
+height:100vh;
+background:#4C1D95;
+display:flex;
+flex-direction:column;
+padding-top:100px;
+transition:.4s;
+}
+
+.menu.activo{
+left:0;
+}
+
+.menu a{
+color:white;
+text-decoration:none;
+padding:18px;
+font-weight:700;
+}
+
+.menu a:hover{
+background:#6C2BD9;
+}
+
 /* TARJETA */
 .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
