@@ -1,0 +1,279 @@
+* {
+    font-family: 'Nunito' !important;
+}
+
+.containerGeneral {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 50px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.quienesSomos,
+.mision,
+.vision {
+    width: 100%;
+    max-width: 900px;
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.473);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: black;
+
+}
+
+.quienesSomos:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px #00FCF8;
+}
+
+.mision:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px #6C2BD9;
+}
+
+.vision:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px #EC4899;
+}
+
+.quienesSomos h2,
+.mision h2,
+.vision h2 {
+    font-family: 'Nunito';
+    font-size: 2rem;
+    color: #000000;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.quienesSomos:hover h2 {
+    text-shadow: 0px 2px 3px #00FCF8;
+}
+
+.mision:hover h2 {
+    text-shadow: 0px 2px 3px #6C2BD9;
+}
+
+.vision:hover h2 {
+    text-shadow: 0px 2px 3px #EC4899;
+}
+
+.quienesSomos h6,
+.mision h6,
+.vision h6 {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #555;
+    font-weight: 600;
+    margin: 0;
+}
+
+#cards-equipo h2 {
+    text-align: center;
+    color: #000000;
+    font-weight: bold;
+    margin-bottom: 60px;
+    margin-top: 70px;
+    font-size: 2.5rem;
+    position: relative;
+}
+
+#cards-equipo h2::after {
+    content: "";
+    font-size: 20px;
+    display: block;
+    width: 500px;
+    height: 4px;
+    background: linear-gradient(90deg, #00FCF8, #6C2BD9);
+    margin: 15px auto 0;
+    border-radius: 10px;
+}
+
+
+#cards-equipo {
+    padding: 20px;
+}
+
+/* TARJETA */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card.team-card:hover {
+    transform: translateY(-8px);
+    transition: all .3s ease;
+}
+
+.card-1:hover {
+    box-shadow: 0 4px 15px #00FCF8;
+}
+
+.card-2:hover {
+    box-shadow: 0 4px 15px #EC4899;
+}
+
+.card-3:hover {
+    box-shadow: 0 4px 15px #6C2BD9;
+}
+
+.card-4:hover {
+    box-shadow: 0 4px 15px #4C1D95;
+}
+
+.card-5:hover {
+    box-shadow: 0 4px 15px #00FCF8;
+}
+
+.img-container {
+    width: 90px;
+    height: 90px;
+    background: #00FCF8;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+    margin-top: 90px;
+}
+
+/* FOTO */
+.team-img {
+    display: block;
+    margin: 0 auto;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 8%;
+    margin-bottom: 8%;
+}
+
+.card-title {
+    color: #000000;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 8%;
+}
+
+.card-rol {
+    color: #000000;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.card-text {
+    color: #000000;
+    font-size: .90rem;
+    line-height: 1.5;
+}
+
+/*------------------------Responsive----------------------*/
+
+/* TABLETS */
+
+@media screen and (max-width: 768px) {
+
+    .containerGeneral {
+        padding: 40px 15px;
+        gap: 25px;
+    }
+
+    .quienesSomos,
+    .mision,
+    .vision {
+        width: 95%;
+        padding: 25px;
+    }
+
+    .quienesSomos h2,
+    .mision h2,
+    .vision h2,
+    #cards-equipo h2 {
+        font-size: 1.8rem;
+    }
+
+    .quienesSomos h6,
+    .mision h6,
+    .vision h6 {
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
+
+    .team-img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+    }
+}
+
+/* CELULARES */
+
+@media screen and (max-width: 480px) {
+
+    .containerGeneral {
+        padding: 25px 10px;
+        gap: 20px;
+    }
+
+    .quienesSomos,
+    .mision,
+    .vision {
+        width: 100%;
+        padding: 20px 15px;
+        border-radius: 10px;
+    }
+
+    .quienesSomos h2,
+    .mision h2,
+    .vision h2,
+    #cards-equipo h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .quienesSomos h6,
+    .mision h6,
+    .vision h6 {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .img-container {
+        width: 70px;
+        height: 70px;
+        margin-top: 40px;
+    }
+
+    .team-img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+    }
+
+    .card-rol {
+        font-size: 0.9rem;
+    }
+
+    .card-text {
+        font-size: 0.85rem;
+    }
+
+    #cards-equipo h2 {
+        margin-top: 40px;
+        margin-bottom: 30px;
+    }
+}
