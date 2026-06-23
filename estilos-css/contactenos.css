@@ -1,0 +1,318 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Nunito',sans-serif;
+background:#faf9ff;
+color:#1F1F1F;
+overflow-x:hidden;
+}
+
+/* ================= MENÚ ================= */
+
+.menu-btn{
+position:fixed;
+top:20px;
+left:20px;
+width:70px;
+height:70px;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+z-index:1000;
+padding:10px;
+}
+
+.menu-btn img{
+width:100px;
+height:100px;
+object-fit:contain;
+}
+
+.menu{
+position:fixed;
+top:0;
+left:-250px;
+width:250px;
+height:100vh;
+background:#4C1D95;
+display:flex;
+flex-direction:column;
+padding-top:100px;
+transition:.4s;
+z-index:999;
+}
+
+.menu.activo{
+left:0;
+}
+
+.menu a{
+color:white;
+text-decoration:none;
+padding:18px;
+font-weight:700;
+transition:.3s;
+}
+
+.menu a:hover{
+background:#6C2BD9;
+}
+
+/* ================= CONTACTO ================= */
+
+.contacto{
+width:95%;
+max-width:1400px;
+margin:auto;
+padding:60px 0;
+}
+
+h1{
+text-align:center;
+font-size:55px;
+color:#4C1D95;
+margin-bottom:15px;
+}
+
+.descripcion{
+text-align:center;
+font-size:20px;
+margin-bottom:40px;
+line-height:1.6;
+}
+
+/* ================= CONTENEDOR ================= */
+
+.contenedor{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:40px;
+}
+
+/* ================= INFORMACIÓN ================= */
+
+.informacion{
+width:55%;
+text-align:center;
+}
+
+.imagen{
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.imagen img{
+width:100%;
+max-width:650px;
+height:auto;
+object-fit:contain;
+}
+
+.datos{
+margin-top:20px;
+}
+
+.datos p{
+margin:15px 0;
+font-weight:700;
+font-size:18px;
+line-height:1.6;
+}
+
+/* ================= FORMULARIO ================= */
+
+.formulario{
+width:45%;
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.1);
+transition:all .3s ease;
+}
+
+.formulario:hover{
+box-shadow:0 0 25px rgba(108,43,217,.6);
+border:2px solid #6C2BD9;
+transform:translateY(-3px);
+}
+
+form{
+display:flex;
+flex-direction:column;
+}
+
+label{
+margin-top:12px;
+font-weight:700;
+}
+
+input,
+textarea{
+width:100%;
+padding:14px;
+margin-top:5px;
+border:2px solid transparent;
+border-radius:10px;
+background:#eee;
+font-size:15px;
+outline:none;
+transition:.3s;
+}
+
+/* ILUMINAR AL ESCRIBIR */
+
+input:focus,
+textarea:focus{
+border:2px solid #6C2BD9;
+background:#f5f0ff;
+box-shadow:0 0 12px rgba(108,43,217,.35);
+}
+
+textarea{
+height:150px;
+resize:none;
+}
+
+/* ================= BOTÓN ================= */
+
+button{
+margin-top:20px;
+padding:15px;
+background:#6C2BD9;
+color:white;
+border:none;
+border-radius:20px;
+cursor:pointer;
+font-weight:bold;
+font-size:16px;
+transition:.3s;
+}
+
+button:hover{
+background:#EC4899;
+}
+
+/* ================= MENSAJE FORMULARIO ================= */
+
+#mensajeFormulario{
+margin-top:15px;
+font-weight:bold;
+text-align:center;
+min-height:25px;
+}
+
+.mensajeError{
+color:#e53935;
+}
+
+.mensajeExito{
+color:#43a047;
+}
+
+/* ================= VALIDACIONES ================= */
+
+small{
+display:block;
+min-height:20px;
+margin-top:5px;
+font-size:12px;
+font-weight:700;
+}
+
+input.errorInput,
+textarea.errorInput{
+border:2px solid #e53935;
+}
+
+input.successInput,
+textarea.successInput{
+border:2px solid #43a047;
+}
+
+/* ================= TABLET ================= */
+
+@media(max-width:1024px){
+
+.contenedor{
+flex-direction:column;
+}
+
+.informacion,
+.formulario{
+width:100%;
+}
+
+.imagen img{
+max-width:500px;
+}
+
+}
+
+/* ================= MÓVIL ================= */
+
+@media(max-width:768px){
+
+.contacto{
+width:95%;
+padding:40px 0;
+}
+
+h1{
+font-size:40px;
+}
+
+.descripcion{
+font-size:18px;
+}
+
+.imagen img{
+max-width:400px;
+}
+
+.formulario{
+padding:25px;
+}
+
+button{
+width:100%;
+}
+
+}
+
+/* ================= MÓVIL PEQUEÑO ================= */
+
+@media(max-width:480px){
+
+h1{
+font-size:30px;
+}
+
+.descripcion{
+font-size:16px;
+}
+
+.imagen img{
+max-width:280px;
+}
+
+.formulario{
+padding:20px;
+}
+
+input,
+textarea{
+font-size:14px;
+}
+
+button{
+font-size:14px;
+}
+
+}

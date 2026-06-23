@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contáctenos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../estilos-css/contactenos.css">
+    <link rel="icon" href="../assets/img/logo.png">
+</head>
+
+<body>
+
+    <!-- Botón menú -->
+    <div class="menu-btn" id="menuBtn">
+        <img src="../assets/img/logo.png" alt="Logo One Click Service">
+    </div>
+
+    <!-- Menú lateral -->
+    <nav class="menu" id="menu">
+        <a href="../inicio/index.html">Inicio</a>
+        <a href="../nosotros/nosotros.html">Sobre Nosotros</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="../preguntas-frecuentes/Preguntas.html">Preguntas Frecuentes</a>
+        <a href="../contactenos/contactenos.html">Contáctenos</a>
+    </nav>
+
+    <section class="contacto">
+
+        <h1>Contáctenos</h1>
+
+        <p class="descripcion">
+            Estamos aquí para ayudarte.
+            <br>
+            Escríbenos y te responderemos lo antes posible.
+        </p>
+
+        <div class="contenedor">
+
+            <!-- INFORMACIÓN -->
+            <div class="informacion">
+
+                <div class="imagen">
+                    <img src="../assets/img/contacto.png" alt="Sobre de contacto">
+                </div>
+
+                <div class="datos">
+
+                    <p>
+                        📧 Correo electrónico
+                        <br>
+                        oneclickservice@gmail.com
+                    </p>
+
+                    <p>
+                        ☎ Teléfono
+                        <br>
+                        +57 3001234567
+                    </p>
+
+                    <p>
+                        📍 Ubicación
+                        <br>
+                        Bogotá, Colombia
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- FORMULARIO -->
+            <div class="formulario">
+
+                <!-- 🔥 FORM CON FORMSPREE -->
+                <form id="formulario" action="https://formspree.io/f/mrewbabj" method="POST">
+
+                    <!-- NOMBRE -->
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Mínimo 10 - Máximo 50 caracteres">
+
+                    <small id="errorNombre"></small>
+
+                    <!-- CORREO -->
+                    <label for="correo">Correo electrónico</label>
+                    <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com">
+
+                    <small id="errorCorreo"></small>
+
+                    <!-- TELÉFONO -->
+                    <label for="telefono">Teléfono</label>
+                    <input type="text" id="telefono" name="telefono" placeholder="Entre 7 y 10 números">
+
+                    <small id="errorTelefono"></small>
+
+                    <!-- MENSAJE -->
+                    <label for="mensaje">Mensaje</label>
+                    <textarea id="mensaje" name="mensaje" placeholder="Mínimo 15 - Máximo 100 caracteres"></textarea>
+
+                    <small id="errorMensaje"></small>
+
+                    <!-- PDF -->
+                    <label for="archivo">Adjuntar documento PDF</label>
+                    <input type="file" id="archivo" name="archivo" accept=".pdf,application/pdf">
+
+                    <small id="errorArchivo"></small>
+
+                    <!-- BOTÓN -->
+                    <button type="submit">
+                        Enviar Mensaje
+                    </button>
+
+                    <!-- MENSAJE GENERAL -->
+                    <p id="mensajeFormulario"></p>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <script src="../JS/contactenos.js"></script>
+    <script src="../js/footer.js"></script>
+
+</body>
+
+</html>
