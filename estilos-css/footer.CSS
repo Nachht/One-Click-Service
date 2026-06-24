@@ -38,8 +38,8 @@
 }
 
 .footer-logo img {
-  width: 110px;   /* 🔥 MÁS GRANDE */
-  height: 110px;
+  width: 50%;   /* 🔥 MÁS GRANDE */
+  height: 180px;
   object-fit: contain;
 }
 

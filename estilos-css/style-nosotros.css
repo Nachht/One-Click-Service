@@ -1,5 +1,10 @@
 * {
-    font-family: 'Nunito' !important;
+    font-family: 'Nunito', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #f8fafc, #eef2ff);
+
 }
 
 .containerGeneral {
@@ -74,31 +79,6 @@
     margin: 0;
 }
 
-#cards-equipo h2 {
-    text-align: center;
-    color: #000000;
-    font-weight: bold;
-    margin-bottom: 60px;
-    margin-top: 70px;
-    font-size: 2.5rem;
-    position: relative;
-}
-
-#cards-equipo h2::after {
-    content: "";
-    font-size: 20px;
-    display: block;
-    width: 500px;
-    height: 4px;
-    background: linear-gradient(90deg, #00FCF8, #6C2BD9);
-    margin: 15px auto 0;
-    border-radius: 10px;
-}
-
-#cards-equipo {
-    padding: 20px;
-}
-
 /* ================= MENÚ ================= */
 
 .menu-btn {
@@ -153,79 +133,142 @@
     background: #6C2BD9;
 }
 
-/* TARJETA */
-.card {
+/* TARJETAS EQUIPO */
+
+#cards-equipo h2 {
+    text-align: center;
+    color: #000000;
+    font-weight: bold;
+    margin-bottom: 60px;
+    margin-top: 70px;
+    font-size: 2.5rem;
+    position: relative;
+}
+
+#cards-equipo h2::after {
+    content: "";
+    display: block;
+    width: 500px;
+    height: 4px;
+    background: linear-gradient(90deg, #00FCF8, #6C2BD9);
+    margin: 15px auto 0;
+    border-radius: 10px;
+}
+
+#cards-equipo {
+    padding: 20px;
+}
+
+.team-card {
+    background-color: #ffffff;
+    border: none !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+    padding: 25px 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card.team-card:hover {
     transform: translateY(-8px);
-    transition: all .3s ease;
 }
 
-.card-1:hover {
-    box-shadow: 0 4px 15px #00FCF8;
+/* Bordes superiores para cada tarjeta dependiendo del color */
+.card-1,
+.card-5 {
+    border-top: 6px solid #00FCF8 !important;
 }
 
-.card-2:hover {
-    box-shadow: 0 4px 15px #EC4899;
+.card-2 {
+    border-top: 6px solid #EC4899 !important;
 }
 
-.card-3:hover {
-    box-shadow: 0 4px 15px #6C2BD9;
+.card-3 {
+    border-top: 6px solid #8B5CF6 !important;
 }
 
-.card-4:hover {
-    box-shadow: 0 4px 15px #4C1D95;
+.card-4 {
+    border-top: 6px solid #6D28D9 !important;
 }
 
-.card-5:hover {
-    box-shadow: 0 4px 15px #00FCF8;
-}
-
-.img-container {
-    width: 90px;
-    height: 90px;
-    background: #00FCF8;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 20px;
-    margin-top: 90px;
-}
-
-/* FOTO */
 .team-img {
-    display: block;
-    margin: 0 auto;
-    width: 120px;
-    height: 120px;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
     object-fit: cover;
-    margin-top: 8%;
-    margin-bottom: 8%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    z-index: 2;
 }
 
 .card-title {
-    color: #000000;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    padding-bottom: 8%;
+    font-size: 1.4rem;
+    color: #1E293B;
+    font-weight: 800;
+    margin-bottom: 10px;
 }
 
 .card-rol {
-    color: #000000;
-    font-size: 1rem;
-    font-weight: bold;
-    margin-bottom: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.badge-scrum {
+    background-color: #E0FDFD;
+    color: #0891B2;
+}
+
+.badge-front {
+    background-color: #FCE7F3;
+    color: #DB2777;
+}
+
+.badge-design {
+    background-color: #F3E8FF;
+    color: #7C3AED;
+}
+
+.badge-back {
+    background-color: #EDE9FE;
+    color: #5B21B6;
 }
 
 .card-text {
-    color: #000000;
-    font-size: .90rem;
-    line-height: 1.5;
+    line-height: 1.6;
+    color: #666;
+    min-height: 100px;
+}
+
+
+/* DESPLAZAMIENTO DEL CONTENIDO PRINCIPAL */
+
+@media screen and (min-width: 769px) {
+
+    /* Estado por defecto: contenido a pantalla completa */
+    .main-content {
+        transition: margin-left 0.4s ease, width 0.4s ease;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    /* Si el elemento '.menu' tiene la clase '.activo', desplazamos '.main-content' */
+    body:has(.menu.activo) .main-content {
+        margin-left: 250px;
+        /* Desplaza el contenido para dar espacio al menú */
+        width: calc(100% - 250px);
+        /* Ajusta el ancho para evitar overflow horizontal */
+    }
 }
 
 /*------------------------Responsive----------------------*/
