@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Perfil Usuario</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/perfil.css">
+    <link rel="stylesheet" href="../footer/footer_admin.css">
+
+    <link rel="icon" href="../../assets/img/logo.png">
+
+</head>
+
+<body>
+
+    <a href="perfil_administrador.html" class="volver">←</a>
+
+    <section class="perfil">
+
+        <h1>Perfil de Usuario</h1>
+
+        <p class="descripcion">Actualiza tu información personal de forma segura.</p>
+
+        <div class="contenedor">
+
+            <!-- FOTO -->
+            <div class="fotoPerfil">
+                <label for="foto">Foto de Perfil</label>
+                <input type="file" id="foto" accept=".jpg,.jpeg,.png,.webp">
+
+                <img id="previewFoto" style="width:120px; border-radius:10px; margin-top:10px; display:block;">
+            </div>
+
+            <!-- FORMULARIO -->
+            <form id="formulario">
+
+                <div class="grid">
+
+                    <div>
+                        <label>Tipo de Documento</label>
+                        <select id="tipoDocumento">
+                            <option value="">Seleccione</option>
+                            <option>Cédula de Ciudadanía</option>
+                            <option>Cédula de Extranjería</option>
+                            <option>Pasaporte</option>
+                            <option>PPT</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>Documento</label>
+                        <input type="text" id="documento">
+                    </div>
+
+                    <div>
+                        <label>Nombres</label>
+                        <input type="text" id="nombres">
+                    </div>
+
+                    <div>
+                        <label>Apellidos</label>
+                        <input type="text" id="apellidos">
+                    </div>
+
+                    <div>
+                        <label>Celular</label>
+                        <input type="text" id="celular">
+                    </div>
+
+                    <div>
+                        <label>Dirección</label>
+                        <input type="text" id="direccion">
+                    </div>
+
+                    <div>
+                        <label>Correo</label>
+                        <input type="email" id="correo">
+                    </div>
+
+                    <div>
+                        <label>Ciudad</label>
+                        <input type="text" id="ciudad">
+                    </div>
+
+                    <div class="full">
+                        <label>Contraseña</label>
+                        <input type="password" id="password">
+                    </div>
+
+                </div>
+
+                <!-- SOLO GUARDAR -->
+                <button type="submit">Guardar Cambios</button>
+
+                <p id="mensajeFormulario"></p>
+
+            </form>
+
+        </div>
+
+    </section>
+
+    <div id="footer-container"></div>
+
+    <script src="../footer/footer_admin.js"></script>
+    <script src="../js/perfil.js"></script>
+
+</body>
+
+</html>

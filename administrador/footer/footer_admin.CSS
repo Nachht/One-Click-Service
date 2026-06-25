@@ -1,0 +1,70 @@
+.footer-admin {
+  background: linear-gradient(135deg, #3b0a75, #4c1d95);
+  color: #fff;
+  padding: 50px 20px 15px;
+  font-family: 'Nunito', sans-serif;
+  margin-top: 40px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+  gap: 30px;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+}
+
+.logo-box img {
+  width: 130px;
+  margin-bottom: 10px;
+}
+
+.footer-section h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.footer-section h4 {
+  color: #22d3ee;
+  margin-bottom: 12px;
+}
+
+.footer-section p {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.footer-section a {
+  display: block;
+  color: #e5e7eb;
+  text-decoration: none;
+  margin: 6px 0;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.footer-section a:hover {
+  color: #22d3ee;
+  transform: translateX(6px);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 25px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding-top: 12px;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+/* efecto hover general */
+.footer-admin:hover {
+  box-shadow: 0 -10px 35px rgba(34, 211, 238, 0.15);
+  transition: 0.3s;
+}
