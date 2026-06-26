@@ -4,133 +4,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contáctenos</title>
+    <title>Gestionar servicios</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="icon" href="../../assets/img/logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/admin-servicios.css">
+    <link rel="stylesheet" href="../footer/footer_admin.css">
 </head>
 
 <body>
 
-    <!-- ====== HEADER (RENDERIZADO POR JS) ====== -->
-   
-    <div id="header-container"></div>
+<!-- Botón menú -->
+    <div class="menu-btn" id="menuBtn">
+        <img src="../../assets/img/logo.png" alt="Logo">
+    </div>
 
-    <!-- Botón menú -->
-    
+    <nav class="menu" id="menu">
+        <a href="perfil_administrador.html">Perfiles</a>
+        <a href="../html/admin-servicios.html">Servicios</a>
+    </nav>
 
-    <!-- Menú lateral -->
-    <!-- <nav class="menu" id="menu">
-        <a href="../inicio/index.html">Inicio</a>
-        <a href="../nosotros/nosotros.html">Sobre Nosotros</a>
-        <a href="servicios.html">Servicios</a>
-        <a href="../preguntas-frecuentes/Preguntas.html">Preguntas Frecuentes</a>
-        <a href="../contactenos/contactenos.html">Contáctenos</a>
-    </nav> -->
-
-    <!-- ============================================
+<!-- ============================================
 SECCIÓN PRINCIPAL DE SERVICIOS
 ============================================ -->
-<section class="services-container" aria-label="Gestión de servicios">
-    
-    <!-- ============================================
+    <section class="services-container" aria-label="Gestión de servicios">
+
+        <!-- ============================================
     ENCABEZADO DE LA SECCIÓN
     ============================================ -->
-    <header class="page-header">
-        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
-            <div>
-                <h1>
-                    <i class="bi bi-grid-3x3-gap-fill" aria-hidden="true"></i>
-                    Gestión de Servicios
-                </h1>
-                <p>Administra los servicios que se mostrarán en los apartados del usuario.</p>
+        <header class="page-header">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                <div>
+                    <h1>
+                        Gestión de Servicios
+                    </h1>
+                    <p>Administra los servicios que se mostrarán en los apartados del usuario.</p>
+                </div>
+                <div>
+                    <span class="badge bg-primary bg-opacity-10 text-primary p-2">
+                        <i class="bi bi-info-circle" aria-hidden="true"></i>
+                        Total: <span id="totalCount" aria-label="Total de servicios">8</span> servicios
+                    </span>
+                </div>
             </div>
-            <div>
-                <span class="badge bg-primary bg-opacity-10 text-primary p-2">
-                    <i class="bi bi-info-circle" aria-hidden="true"></i>
-                    Total: <span id="totalCount" aria-label="Total de servicios">8</span> servicios
-                </span>
-            </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- ============================================
+        <!-- ============================================
     BARRA DE HERRAMIENTAS
     ============================================ -->
-    <div class="toolbar" role="toolbar" aria-label="Barra de herramientas de servicios">
-        
-        <!-- Buscador -->
-        <div class="search-box" role="search">
-            <i class="bi bi-search" aria-hidden="true"></i>
-            <input 
-                type="text" 
-                id="searchInput" 
-                class="form-control" 
-                placeholder="Buscar servicios..." 
-                aria-label="Buscar servicios por nombre o descripción"
-            />
-        </div>
+        <div class="toolbar" role="toolbar" aria-label="Barra de herramientas de servicios">
 
-        <!-- Filtros -->
-        <div class="filter-group" role="group" aria-label="Filtros de estado">
-            <button 
-                class="btn btn-filter btn-outline-secondary" 
-                id="filterAll" 
-                aria-pressed="true"
-            >
-                <i class="bi bi-list" aria-hidden="true"></i> Todos
-            </button>
-            <button 
-                class="btn btn-filter btn-outline-success" 
-                id="filterActive" 
-                aria-pressed="false"
-            >
-                <i class="bi bi-check-circle" aria-hidden="true"></i> Activos
-            </button>
-            <button 
-                class="btn btn-filter btn-outline-danger" 
-                id="filterInactive" 
-                aria-pressed="false"
-            >
-                <i class="bi bi-x-circle" aria-hidden="true"></i> Inactivos
-            </button>
-            <button 
-                class="btn btn-filter btn-outline-secondary" 
-                id="clearFilters"
-            >
-                <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i> Limpiar
+            <!-- Buscador -->
+            <div class="search-box" role="search">
+                <i class="bi bi-search" aria-hidden="true"></i>
+                <input type="text" id="searchInput" class="form-control" placeholder="Buscar servicios..."
+                    aria-label="Buscar servicios por nombre o descripción" />
+            </div>
+
+            <!-- Filtros -->
+            <div class="filter-group" role="group" aria-label="Filtros de estado">
+                <button class="btn btn-filter btn-outline-secondary" id="filterAll" aria-pressed="true">
+                    <i class="bi bi-list" aria-hidden="true"></i> Todos
+                </button>
+                <button class="btn btn-filter btn-outline-success" id="filterActive" aria-pressed="false">
+                    <i class="bi bi-check-circle" aria-hidden="true"></i> Activos
+                </button>
+                <button class="btn btn-filter btn-outline-danger" id="filterInactive" aria-pressed="false">
+                    <i class="bi bi-x-circle" aria-hidden="true"></i> Inactivos
+                </button>
+                <button class="btn btn-filter btn-outline-secondary" id="clearFilters">
+                    <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i> Limpiar
+                </button>
+            </div>
+
+            <!-- Botón Agregar -->
+            <button class="btn btn-add" data-bs-toggle="modal" data-bs-target="#addServiceModal"
+                aria-label="Agregar nuevo servicio">
+                <i class="bi bi-plus-lg" aria-hidden="true"></i> Agregar servicio
             </button>
         </div>
 
-        <!-- Botón Agregar -->
-        <button 
-            class="btn btn-add" 
-            data-bs-toggle="modal" 
-            data-bs-target="#addServiceModal"
-            aria-label="Agregar nuevo servicio"
-        >
-            <i class="bi bi-plus-lg" aria-hidden="true"></i> Agregar servicio
-        </button>
+        <!-- CONTADOR DE RESULTADOS -->
+        <div class="results-count" aria-live="polite">
+            Mostrando <span id="visibleCount" aria-label="Servicios visibles">8</span> servicios
+        </div>
+
+        <!-- Cards de servicios -->
+        <div class="row g-4" id="servicesGrid"></div>
+
+    </section>
+
+    <!-- Ventana agregar -->
+    <div id="modalAgregarServicio" class="fondoModal">
+        <div class="ventanaModal">
+            <div class="encabezadoModal">
+                <h2>Agregar servicio</h2>
+                <button id="cerrarModalAgregar" class="botonCerrarModal">&times;</button>
+            </div>
+
+            <form id="formularioAgregarServicio">
+                <div class="grupoCampo">
+                    <label for="imagenServicioAgregar">Imagen</label>
+                    <input type="file" id="imagenServicioAgregar" accept="image/*">
+                </div>
+
+                <div class="grupoCampo">
+                    <label for="nombreServicioAgregar">Nombre del servicio</label>
+                    <input type="text" id="nombreServicioAgregar" required>
+                </div>
+
+                <div class="grupoCampo">
+                    <label for="descripcionServicioAgregar">Descripción</label>
+                    <textarea id="descripcionServicioAgregar" rows="4" required></textarea>
+                </div>
+
+                <div class="grupoCampo">
+                    <label for="precioServicioAgregar">Precio</label>
+                    <input type="number" id="precioServicioAgregar" required>
+                </div>
+
+                <button type="submit" class="botonGuardarServicio">
+                    Guardar servicio
+                </button>
+            </form>
+        </div>
     </div>
 
-    <!-- ============================================
-    CONTADOR DE RESULTADOS
-    ============================================ -->
-    <div class="results-count" aria-live="polite">
-        Mostrando <span id="visibleCount" aria-label="Servicios visibles">8</span> servicios
+    <!-- Ventana editar servicio -->
+
+    <div id="modalEditarServicio" class="fondoModal">
+        <div class="ventanaModal">
+            <div class="encabezadoModal">
+                <h2>Editar servicio</h2>
+                <button id="cerrarModalEditar" class="botonCerrarModal">&times;</button>
+            </div>
+
+            <form id="formularioEditarServicio">
+
+                <input type="hidden" id="idServicioEditar">
+
+                <div class="grupoCampo">
+                    <label for="imagenServicioEditar">Imagen</label>
+                    <input type="file" id="imagenServicioEditar" accept="image/*">
+                </div>
+
+                <div class="grupoCampo">
+                    <label for="nombreServicioEditar">Nombre del servicio</label>
+                    <input type="text" id="nombreServicioEditar" required>
+                </div>
+
+                <div class="grupoCampo">
+                    <label for="descripcionServicioEditar">Descripción</label>
+                    <textarea id="descripcionServicioEditar" rows="4" required></textarea>
+                </div>
+
+                <div class="grupoCampo">
+                    <label for="precioServicioEditar">Precio</label>
+                    <input type="number" id="precioServicioEditar" required>
+                </div>
+
+                <button type="submit" class="botonGuardarServicio">
+                    Actualizar servicio
+                </button>
+
+            </form>
+        </div>
     </div>
+    <div id="footer-container"></div>
 
-    <!-- ============================================
-    GRID DE SERVICIOS
-    ============================================ -->
-    <div class="services-grid" id="servicesGrid" role="list" aria-label="Lista de servicios">
-        <!-- Los servicios se generan dinámicamente con JavaScript -->
-    </div>
-
-</section>
-
-    <!-- <script src="../../js/footer.js"></script> -->
-    
+    <script src="../footer/footer_admin.js"></script>
+    <script src="../js/modalServicios.js"></script>
 
 </body>
 

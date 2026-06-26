@@ -29,7 +29,7 @@
   width: 250px;
 }
 
-/* 🔥 LOGO GRANDE */
+/* LOGO GRANDE */
 .footer-logo {
   display: flex;
   align-items: center;
@@ -38,7 +38,7 @@
 }
 
 .footer-logo img {
-  width: 50%;   /* 🔥 MÁS GRANDE */
+  width: 50%;   /* MÁS GRANDE */
   height: 180px;
   object-fit: contain;
 }

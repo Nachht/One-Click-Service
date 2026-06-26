@@ -90,7 +90,7 @@ body {
 }
 
 .search-box button {
-  background: #4C1D95;
+  background: #EC4899;
   color: white;
   border: none;
   padding: 12px 16px;
@@ -158,6 +158,163 @@ body {
   transform: translateY(-8px);
   box-shadow: 0 0 20px rgba(76, 29, 149, 0.3),
     0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* seguridad al usuario */
+
+.seccionSeguridad {
+  padding: 60px 10%;
+  text-align: center;
+}
+
+.seccionSeguridad h2 {
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+
+.contenedorSeguridad {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.tarjetasSeguridad {
+  background: white;
+  border-radius: 15px;
+  padding: 25px 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+  text-align: center;
+}
+
+.tarjetasSeguridad i {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.iconoRosado {
+  color: #EC4899;
+}
+
+.iconoCeleste {
+  color: #00FCF8;
+}
+
+.tarjetasSeguridad h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #4C1D95;
+}
+
+.tarjetasSeguridad p {
+  font-size: 13px;
+  color: #555;
+}
+
+.tarjetasSeguridad:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 20px rgba(245, 45, 145, 0.568),
+    0 12px 25px rgba(0, 252, 248, 0.712);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .contenedorSeguridad {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .contenedorSeguridad {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* como funciona */
+
+.seccionPasos {
+  padding: 60px 10%;
+  text-align: center;
+}
+
+.seccionPasos h2 {
+  font-size: 28px;
+  margin-bottom: 40px;
+}
+
+/* CONTENEDOR */
+.containerComoFunciona {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+/* PASO */
+.pasos {
+  width: 200px;
+  text-align: center;
+}
+
+/* ICONO CIRCULAR */
+.iconoCircular {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  font-size: 22px;
+}
+
+/* COLORES */
+.iconoCircular.morado {
+  background: #6C2BD9;
+  color: white;
+}
+
+.iconoCircular.rosado {
+  background: #EC4899;
+  color: rgb(255, 255, 255);
+}
+
+/* TEXTO */
+.pasos h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #4C1D95;
+}
+
+.pasos p {
+  font-size: 13px;
+  color: #555;
+}
+
+/* CONECTORES */
+.puntos {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.puntos span {
+  width: 6px;
+  height: 6px;
+  background: #000000;
+  border-radius: 50%;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .containerComoFunciona {
+    flex-direction: column;
+  }
+
+  .puntos {
+    transform: rotate(90deg);
+  }
 }
 
 /* ================= RESPONSIVE ================= */
