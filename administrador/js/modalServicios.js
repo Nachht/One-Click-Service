@@ -29,14 +29,14 @@ const formularioEditarServicio = document.getElementById("formularioEditarServic
 // ======================
 // MENÚ
 // ======================
-    const menuBtn = document.getElementById("menuBtn");
-    const menu = document.getElementById("menu");
+const menuBtn = document.getElementById("menuBtn");
+const menu = document.getElementById("menu");
 
-    if (menuBtn && menu) {
-        menuBtn.addEventListener("click", () => {
-            menu.classList.toggle("activo");
-        });
-    }
+if (menuBtn && menu) {
+    menuBtn.addEventListener("click", () => {
+        menu.classList.toggle("activo");
+    });
+}
     
 // Devuelve una imagen temporal cuando el usuario selecciona un archivo.
 function obtenerRutaImagen(imagenArchivo) {
@@ -75,21 +75,21 @@ function activarBotonFiltro(botonSeleccionado) {
     botonSeleccionado.classList.add("active");
 }
 
-// Renderizado de servios - genera automáticamente las tarjetas.
+// Renderizado de servicios - genera automáticamente las tarjetas.
 function renderizarServicios() {
     contenedorServicios.innerHTML = "";
     const serviciosFiltrados = listaServicios.filter(servicio => {
         const coincideBusqueda =
             servicio.nombre
                 .toLowerCase()
-                .includes(textoBusqueda.toLowerCase())
-        servicio.descripcion
-            .toLowerCase()
-            .includes(textoBusqueda.toLowerCase());
+                .includes(textoBusqueda.toLowerCase()) ||
+            servicio.descripcion
+                .toLowerCase()
+                .includes(textoBusqueda.toLowerCase());
 
         let coincideFiltro = true;
         if (filtroActual === "activos") {
-            coincideFiltro = servicio.activo;
+            coindexFiltro = servicio.activo;
         }
         if (filtroActual === "inactivos") {
             coincideFiltro = !servicio.activo;
@@ -98,8 +98,7 @@ function renderizarServicios() {
     });
 
     if (serviciosFiltrados.length === 0) {
-        contenedorServicios.innerHTML =
-            `
+        contenedorServicios.innerHTML = `
             <div class="mensajeSinServicios">
                 <h3>No se encontraron servicios.</h3>
                 <p>Intenta cambiar el filtro o agregar uno nuevo.</p>
@@ -112,45 +111,38 @@ function renderizarServicios() {
     // Crear cada tarjeta
     serviciosFiltrados.forEach((servicio) => {
         const tarjeta = document.createElement("div");
-
-        // Asignamos las clases dinámicas de estado correspondientes
         tarjeta.className = "col-lg-6 col-md-6 col-12";
-        // Definimos el icono del interruptor deslizante
+        
         const iconoToggle = servicio.activo
             ? '<i class="bi bi-toggle-on toggle-icon active"></i>'
             : '<i class="bi bi-toggle-off toggle-icon inactive"></i>';
 
+        // 🌟 CORRECCIÓN CRÍTICA: Envolvemos el ID en comillas simples '${servicio.id}' para evitar errores de redondeo de enteros
         tarjeta.innerHTML = `
-<div class="service-card ${servicio.activo ? "card-activo" : "card-inactivo"}">
-
-    <div class="row align-items-center">
-
-        <div class="col-4 text-center">
-            <div class="service-img-container">
-                <img src="${servicio.imagen}" alt="${servicio.nombre}">
-            </div>
-        </div>
-
-        <div class="col-8">
-            <h3 class="service-card-title">${servicio.nombre}</h3>
-            <p class="service-card-desc"> ${servicio.descripcion} </p>
-
-            <div class="service-card-price"> ${formatearPrecio(servicio.precio)} </div>
-
-            <div class="d-flex justify-content-between align-items-center mt-3">
-                <div class="estado"
-                    onclick="cambiarEstadoServicio(${servicio.id})">
-
-                    <span class="me-2"> ${servicio.activo ? "Activo" : "Inactivo"} </span>
-                    ${iconoToggle}
+            <div class="service-card ${servicio.activo ? "card-activo" : "card-inactivo"}">
+                <div class="row align-items-center">
+                    <div class="col-4 text-center">
+                        <div class="service-img-container">
+                            <img src="${servicio.imagen}" alt="${servicio.nombre}">
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <h3 class="service-card-title">${servicio.nombre}</h3>
+                        <p class="service-card-desc"> ${servicio.descripcion} </p>
+                        <div class="service-card-price"> ${formatearPrecio(servicio.precio)} </div>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div class="estado" onclick="cambiarEstadoServicio('${servicio.id}')">
+                                <span class="me-2"> ${servicio.activo ? "Activo" : "Inactivo"} </span>
+                                ${iconoToggle}
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm rounded-3" onclick="abrirModalEditarServicio('${servicio.id}')"> 
+                                <i class="bi bi-pencil-square"></i> Editar
+                            </button>
+                        </div>
+                    </div>
                 </div>
-
-                <button class="btn btn-outline-primary btn-sm rounded-3" onclick="abrirModalEditarServicio(${servicio.id})"> <i class="bi bi-pencil-square"></i> Editar</button>
             </div>
-        </div>
-    </div>
-</div>
-`;
+        `;
         contenedorServicios.appendChild(tarjeta);
     });
 
@@ -182,23 +174,23 @@ formularioAgregarServicio.addEventListener("submit", function (evento) {
     const nombreServicio = document.getElementById("nombreServicioAgregar").value.trim();
     const descripcionServicio = document.getElementById("descripcionServicioAgregar").value.trim();
     const precioServicio = document.getElementById("precioServicioAgregar").value;
+    
     const nuevoServicio = {
-        id: Date.now(),
+        id: Date.now().toString(), // Lo guardamos como String para asegurar el id de una vez
         imagen: obtenerRutaImagen(archivoImagen),
         nombre: nombreServicio,
         descripcion: descripcionServicio,
         precio: Number(precioServicio),
         activo: true
-
     };
 
     listaServicios.push(nuevoServicio);
 
-    // Para mostrar JSON en consola
-    console.clear();
+    // 🌟 LA REGLA DEL PROFESOR: Guardar la lista actualizada de inmediato en el LocalStorage
+    localStorage.setItem("listaServicios", JSON.stringify(listaServicios));
 
+    console.clear();
     console.table(listaServicios);
-    console.log(JSON.stringify(listaServicios, null, 2));
 
     renderizarServicios();
     formularioAgregarServicio.reset();
@@ -207,7 +199,7 @@ formularioAgregarServicio.addEventListener("submit", function (evento) {
 
 // Función para poder editar un servicio
 function abrirModalEditarServicio(idServicio) {
-    indiceServicioEditar = listaServicios.findIndex(servicio => servicio.id === idServicio);
+    indiceServicioEditar = listaServicios.findIndex(servicio => servicio.id.toString() === idServicio.toString());
     if (indiceServicioEditar === -1) {
         return;
     }
@@ -216,7 +208,6 @@ function abrirModalEditarServicio(idServicio) {
     document.getElementById("nombreServicioEditar").value = servicio.nombre;
     document.getElementById("descripcionServicioEditar").value = servicio.descripcion;
     document.getElementById("precioServicioEditar").value = servicio.precio;
-    // Limpiar el input de imagen. Si el usuario no selecciona otra, se conserva la actual.
     document.getElementById("imagenServicioEditar").value = "";
     modalEditarServicio.classList.add("activo");
 }
@@ -244,20 +235,16 @@ formularioEditarServicio.addEventListener("submit", function (evento) {
     servicio.descripcion = document.getElementById("descripcionServicioEditar").value.trim();
     servicio.precio = Number(document.getElementById("precioServicioEditar").value);
 
-    const nuevaImagen =
-        document.getElementById("imagenServicioEditar").files[0];
-
+    const nuevaImagen = document.getElementById("imagenServicioEditar").files[0];
     if (nuevaImagen) {
         servicio.imagen = obtenerRutaImagen(nuevaImagen);
     }
 
-    // Mostrar JSON actualizado
-    console.clear();
+    // 🌟 REGLA DEL PROFESOR: Guardar los cambios de la edición
+    localStorage.setItem("listaServicios", JSON.stringify(listaServicios));
 
+    console.clear();
     console.table(listaServicios);
-    console.log(
-        JSON.stringify(listaServicios, null, 2)
-    );
 
     renderizarServicios();
     modalEditarServicio.classList.remove("activo");
@@ -299,18 +286,18 @@ botonLimpiarFiltros.addEventListener("click", () => {
 
 // Activar y desactivar servicio
 function cambiarEstadoServicio(idServicio) {
-    const servicio = listaServicios.find(servicio => {
-        return servicio.id === idServicio;
-    });
+    const servicio = listaServicios.find(servicio => servicio.id.toString() === idServicio.toString());
     if (!servicio) {
         return;
     }
 
     servicio.activo = !servicio.activo;
-    console.clear();
 
+    // 🌟 REGLA DEL PROFESOR: Guardar el nuevo estado activo/inactivo
+    localStorage.setItem("listaServicios", JSON.stringify(listaServicios));
+
+    console.clear();
     console.table(listaServicios);
-    console.log(JSON.stringify(listaServicios, null, 2));
     renderizarServicios();
 }
 
@@ -322,11 +309,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (guardados) {
         listaServicios = JSON.parse(guardados);
-    } else if (listaServicios.length === 0) {
-       
+        
+        // Limpieza de seguridad por si acaso quedó algún enlace 'blob:' temporal roto
+        listaServicios = listaServicios.map(servicio => {
+            if (servicio.imagen && servicio.imagen.startsWith('blob:')) {
+                servicio.imagen = "../../assets/img/persona.png";
+            }
+            return servicio;
+        });
+        
+        localStorage.setItem("listaServicios", JSON.stringify(listaServicios));
+
+    } else {
         listaServicios = [
             {
-                id: 1,
+                id: "1",
                 imagen: "../../assets/img/persona.png",
                 nombre: "Servicio de Aseo",
                 descripcion: "Limpieza de hogares y oficinas.",
@@ -334,7 +331,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 activo: true
             },
             {
-                id: 2,
+                id: "2",
                 imagen: "../../assets/img/persona.png",
                 nombre: "Jardinería",
                 descripcion: "Mantenimiento y poda de jardines.",
@@ -342,7 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 activo: true
             },
             {
-                id: 3,
+                id: "3",
                 imagen: "../../assets/img/persona.png",
                 nombre: "Peluquería",
                 descripcion: "Corte y arreglo personal a domicilio.",
@@ -358,8 +355,6 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarContadores();
 });
 
-window.abrirModalEditarServicio =
-    abrirModalEditarServicio;
-
-window.cambiarEstadoServicio =
-    cambiarEstadoServicio;
+// Exponer funciones globales de forma limpia
+window.abrirModalEditarServicio = abrirModalEditarServicio;
+window.cambiarEstadoServicio = cambiarEstadoServicio;
