@@ -117,7 +117,7 @@ function renderizarServicios() {
             ? '<i class="bi bi-toggle-on toggle-icon active"></i>'
             : '<i class="bi bi-toggle-off toggle-icon inactive"></i>';
 
-        // 🌟 CORRECCIÓN CRÍTICA: Envolvemos el ID en comillas simples '${servicio.id}' para evitar errores de redondeo de enteros
+        
         tarjeta.innerHTML = `
             <div class="service-card ${servicio.activo ? "card-activo" : "card-inactivo"}">
                 <div class="row align-items-center">
@@ -186,7 +186,6 @@ formularioAgregarServicio.addEventListener("submit", function (evento) {
 
     listaServicios.push(nuevoServicio);
 
-    // 🌟 LA REGLA DEL PROFESOR: Guardar la lista actualizada de inmediato en el LocalStorage
     localStorage.setItem("listaServicios", JSON.stringify(listaServicios));
 
     console.clear();
@@ -240,7 +239,7 @@ formularioEditarServicio.addEventListener("submit", function (evento) {
         servicio.imagen = obtenerRutaImagen(nuevaImagen);
     }
 
-    // 🌟 REGLA DEL PROFESOR: Guardar los cambios de la edición
+    
     localStorage.setItem("listaServicios", JSON.stringify(listaServicios));
 
     console.clear();
@@ -293,7 +292,6 @@ function cambiarEstadoServicio(idServicio) {
 
     servicio.activo = !servicio.activo;
 
-    // 🌟 REGLA DEL PROFESOR: Guardar el nuevo estado activo/inactivo
     localStorage.setItem("listaServicios", JSON.stringify(listaServicios));
 
     console.clear();
