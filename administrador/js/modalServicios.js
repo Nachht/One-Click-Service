@@ -318,8 +318,12 @@ function cambiarEstadoServicio(idServicio) {
 document.addEventListener("DOMContentLoaded", () => {
     activarBotonFiltro(botonFiltroTodos);
 
-    // Parte donde se ejecuta la prueba de código
-    if (listaServicios.length === 0) {
+    const guardados = localStorage.getItem("listaServicios");
+
+    if (guardados) {
+        listaServicios = JSON.parse(guardados);
+    } else if (listaServicios.length === 0) {
+       
         listaServicios = [
             {
                 id: 1,
@@ -329,7 +333,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 precio: 80000,
                 activo: true
             },
-
             {
                 id: 2,
                 imagen: "../../assets/img/persona.png",
@@ -338,7 +341,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 precio: 65000,
                 activo: true
             },
-
             {
                 id: 3,
                 imagen: "../../assets/img/persona.png",
@@ -346,7 +348,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 descripcion: "Corte y arreglo personal a domicilio.",
                 precio: 45000,
                 activo: false
-            }];
+            }
+        ];
+        
+        localStorage.setItem("listaServicios", JSON.stringify(listaServicios));
     }
 
     renderizarServicios();
