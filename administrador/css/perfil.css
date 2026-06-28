@@ -2,212 +2,185 @@
 RESETEO GENERAL
 ======================================================= */
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* =======================================================
    ESTILOS GENERALES
 ======================================================= */
 
-body{
-font-family:'Nunito',sans-serif;
-background:#faf9ff;
-color:#1F1F1F;
-overflow-x:hidden;
+body {
+    font-family: 'Nunito', sans-serif;
+    background: #faf9ff;
+    color: #1F1F1F;
+    overflow-x: hidden;
 }
 
 /* =======================================================
    FLECHA VOLVER
 ======================================================= */
 
-.volver{
-position:fixed;
-top:20px;
-left:20px;
-text-decoration:none;
-font-size:55px;
-font-weight:800;
-color:#6C2BD9;
-transition:.3s;
-z-index:1000;
+.volver {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    font-size: 55px;
+    font-weight: 800;
+    color: #6C2BD9;
+    transition: .3s;
+    z-index: 1000;
 }
 
-.volver:hover{
-color:#EC4899;
-transform:translateX(-8px);
+.volver:hover {
+    color: #EC4899;
+    transform: translateX(-8px);
 }
 
 /* =======================================================
    SECCIÓN PERFIL
 ======================================================= */
 
-.perfil{
-width:95%;
-max-width:1300px;
-margin:auto;
-padding:60px 0;
+.perfil {
+    width: 95%;
+    max-width: 1300px;
+    margin: auto;
+    padding: 60px 0;
 }
 
 /* =======================================================
    TÍTULO
 ======================================================= */
 
-h1{
-text-align:center;
-font-size:55px;
-color:#4C1D95;
-margin-bottom:15px;
+h1 {
+    text-align: center;
+    font-size: 55px;
+    color: #4C1D95;
+    margin-bottom: 15px;
 }
 
-.descripcion{
-text-align:center;
-font-size:20px;
-margin-bottom:40px;
-line-height:1.6;
-color:#555;
+.descripcion {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 40px;
+    line-height: 1.6;
+    color: #555;
 }
 
 /* =======================================================
    CONTENEDOR PRINCIPAL
 ======================================================= */
 
-.contenedor{
-background:white;
-padding:40px;
-border-radius:25px;
-box-shadow:0 10px 30px rgba(0,0,0,.08);
-transition:all .4s ease;
+.contenedor {
+    background: white;
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+    transition: all .4s ease;
 }
 
 /* =======================================================
    EFECTO ILUMINACIÓN
 ======================================================= */
 
-.contenedor:hover{
-box-shadow:
-0 0 20px rgba(108,43,217,.4),
-0 0 40px rgba(108,43,217,.25);
-transform:translateY(-3px);
+.contenedor:hover {
+    box-shadow:
+        0 0 20px rgba(108, 43, 217, .4),
+        0 0 40px rgba(108, 43, 217, .25);
+    transform: translateY(-3px);
 }
 
 /* =======================================================
    AVATAR
 ======================================================= */
 
-.avatar{
-display:flex;
-justify-content:center;
-margin-bottom:30px;
+.avatar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
 }
 
-.avatar img{
-width:130px;
-height:130px;
-object-fit:contain;
+.avatar img {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
 }
 
 /* =======================================================
    FORMULARIO
 ======================================================= */
 
-form{
-width:100%;
+form {
+    width: 100%;
 }
 
 /* =======================================================
    FOTO DE PERFIL
 ======================================================= */
 
-.fotoPerfil{
-
-max-width:400px;
-
-margin:0 auto 30px auto;
-
-text-align:center;
-
+.fotoPerfil {
+    max-width: 400px;
+    margin: 0 auto 30px auto;
+    text-align: center;
 }
 
-.fotoPerfil label{
-
-display:block;
-
-margin-bottom:10px;
-
-font-weight:700;
-
-color:#4C1D95;
-
+.fotoPerfil label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: #4C1D95;
 }
 
-.fotoPerfil input[type="file"]{
-
-width:100%;
-
-padding:12px;
-
-background:#eeeeee;
-
-border:none;
-
-border-radius:10px;
-
-font-family:'Nunito',sans-serif;
-
-cursor:pointer;
-
-transition:.3s;
-
+.fotoPerfil input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    background: #eeeeee;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: .3s;
 }
 
-.fotoPerfil input[type="file"]:hover{
-
-background:#f5f0ff;
-
-box-shadow:0 0 10px rgba(108,43,217,.25);
-
+.fotoPerfil input[type="file"]:hover {
+    background: #f5f0ff;
+    box-shadow: 0 0 10px rgba(108, 43, 217, .25);
 }
 
-.fotoPerfil small{
-
-display:block;
-
-min-height:20px;
-
-margin-top:5px;
-
-font-size:12px;
-
-font-weight:700;
-
+.fotoPerfil small {
+    display: block;
+    min-height: 20px;
+    margin-top: 5px;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 /* =======================================================
    GRID
 ======================================================= */
 
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
-.full{
-grid-column:1 / 3;
+.full {
+    grid-column: 1 / 3;
 }
 
 /* =======================================================
    LABELS
 ======================================================= */
 
-label{
-display:block;
-font-weight:700;
-margin-bottom:5px;
-color:#1F1F1F;
+label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #1F1F1F;
 }
 
 /* =======================================================
@@ -215,15 +188,15 @@ color:#1F1F1F;
 ======================================================= */
 
 input,
-select{
-width:100%;
-padding:14px;
-background:#eeeeee;
-border:none;
-border-radius:10px;
-font-size:15px;
-font-family:'Nunito',sans-serif;
-transition:.3s;
+select {
+    width: 100%;
+    padding: 14px;
+    background: #eeeeee;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'Nunito', sans-serif;
+    transition: .3s;
 }
 
 /* =======================================================
@@ -231,145 +204,276 @@ transition:.3s;
 ======================================================= */
 
 input:focus,
-select:focus{
-outline:none;
-background:#f5f0ff;
-border:2px solid #6C2BD9;
-box-shadow:0 0 12px rgba(108,43,217,.35);
+select:focus {
+    outline: none;
+    background: #f5f0ff;
+    border: 2px solid #6C2BD9;
+    box-shadow: 0 0 12px rgba(108, 43, 217, .35);
 }
 
 /* =======================================================
-   BOTÓN
+   BOTÓN GUARDAR
 ======================================================= */
 
-button{
-margin-top:25px;
-width:100%;
-padding:15px;
-border:none;
-border-radius:25px;
-background:#6C2BD9;
-color:white;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
-transition:.3s;
+button[type="submit"] {
+    margin-top: 25px;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    background: #6C2BD9;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
 }
 
-button:hover{
-background:#EC4899;
+button[type="submit"]:hover:not(:disabled) {
+    background: #EC4899;
+}
+
+/* =======================================================
+   BOTÓN DESHABILITADO
+======================================================= */
+
+button[type="submit"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #a0a0a0 !important;
+}
+
+button[type="submit"]:disabled:hover {
+    background: #a0a0a0 !important;
+    transform: none;
 }
 
 /* =======================================================
    MENSAJES DE VALIDACIÓN
 ======================================================= */
 
-small{
-display:block;
-min-height:20px;
-margin-top:5px;
-font-size:12px;
-font-weight:700;
+small {
+    display: block;
+    min-height: 20px;
+    margin-top: 5px;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 /* =======================================================
-   CAMPOS INCORRECTOS
+   CAMPOS INCORRECTOS (ROJO)
 ======================================================= */
 
-.errorInput{
-border:2px solid #e53935 !important;
+.errorInput {
+    border: 2px solid #e53935 !important;
+    background-color: #fff0f0 !important;
+    transition: all 0.3s ease;
 }
 
 /* =======================================================
-   CAMPOS CORRECTOS
+   CAMPOS CORRECTOS (VERDE)
 ======================================================= */
 
-.successInput{
-border:2px solid #43a047 !important;
+.successInput {
+    border: 2px solid #43a047 !important;
+    background-color: #f0fff4 !important;
+    transition: all 0.3s ease;
 }
 
 /* =======================================================
-   MENSAJE GENERAL
+   CONTENEDOR DE CAMPO
 ======================================================= */
 
-#mensajeFormulario{
-margin-top:15px;
-text-align:center;
-font-weight:bold;
-min-height:25px;
+.campo-group {
+    position: relative;
+    margin-bottom: 5px;
+}
+
+/* =======================================================
+   WRAPPER PARA INPUT CON ÍCONO
+======================================================= */
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper .icono-validacion {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.input-wrapper .icono-validacion.visible {
+    opacity: 1;
+}
+
+/* =======================================================
+   MENSAJES DE ERROR
+======================================================= */
+
+.mensaje-error {
+    color: #e53935;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 5px;
+    min-height: 20px;
+    display: none;
+    animation: fadeInError 0.3s ease;
+}
+
+.mensaje-error.visible {
+    display: block;
+}
+
+/* =======================================================
+   MENSAJES DE ÉXITO
+======================================================= */
+
+.mensaje-exito {
+    color: #43a047;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 5px;
+    min-height: 20px;
+    display: none;
+    animation: fadeInExito 0.3s ease;
+}
+
+.mensaje-exito.visible {
+    display: block;
+}
+
+/* =======================================================
+   ANIMACIONES
+======================================================= */
+
+@keyframes fadeInError {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInExito {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =======================================================
+   MENSAJE GENERAL DEL FORMULARIO
+======================================================= */
+
+#mensajeFormulario {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    display: none;
+    text-align: center;
+}
+
+#mensajeFormulario.error {
+    display: block;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+#mensajeFormulario.exito {
+    display: block;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
 }
 
 /* =======================================================
    RESPONSIVE TABLET
 ======================================================= */
 
-@media(max-width:1024px){
-
-.grid{
-grid-template-columns:1fr;
-}
-
-.full{
-grid-column:auto;
-}
-
+@media(max-width:1024px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    .full {
+        grid-column: auto;
+    }
 }
 
 /* =======================================================
    RESPONSIVE CELULAR
 ======================================================= */
 
-@media(max-width:768px){
-
-h1{
-font-size:40px;
-}
-
-.descripcion{
-font-size:18px;
-}
-
-.contenedor{
-padding:25px;
-}
-
-.avatar img{
-width:100px;
-height:100px;
-}
-
-.volver{
-font-size:45px;
-}
-
+@media(max-width:768px) {
+    h1 {
+        font-size: 40px;
+    }
+    .descripcion {
+        font-size: 18px;
+    }
+    .contenedor {
+        padding: 25px;
+    }
+    .avatar img {
+        width: 100px;
+        height: 100px;
+    }
+    .volver {
+        font-size: 45px;
+    }
+    .input-wrapper .icono-validacion {
+        font-size: 16px;
+        right: 10px;
+    }
+    .mensaje-error,
+    .mensaje-exito {
+        font-size: 11px;
+        min-height: 18px;
+    }
 }
 
 /* =======================================================
    CELULARES PEQUEÑOS
 ======================================================= */
 
-@media(max-width:480px){
-
-h1{
-font-size:30px;
+@media(max-width:480px) {
+    h1 {
+        font-size: 30px;
+    }
+    .descripcion {
+        font-size: 16px;
+    }
+    input,
+    select {
+        font-size: 14px;
+    }
+    button[type="submit"] {
+        font-size: 14px;
+    }
+    .volver {
+        font-size: 38px;
+    }
+    .input-wrapper .icono-validacion {
+        font-size: 14px;
+        right: 8px;
+    }
+    .mensaje-error,
+    .mensaje-exito {
+        font-size: 10px;
+        min-height: 16px;
+    }
 }
-
-.descripcion{
-font-size:16px;
-}
-
-input,
-select{
-font-size:14px;
-}
-
-button{
-font-size:14px;
-}
-
-.volver{
-font-size:38px;
-}
-
-}
-

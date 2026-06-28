@@ -85,7 +85,6 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-
 }
 
 .btn-filter {
@@ -109,7 +108,6 @@ body {
 }
 
 /* Ventanas emergentes */
-
 .fondoModal {
     position: fixed;
     inset: 0;
@@ -139,7 +137,6 @@ body {
         opacity: 0;
         transform: translateY(-20px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -252,7 +249,6 @@ body {
     font-weight: 700;
     color: #2c2c2c;
     margin-bottom: 8px;
-
 }
 
 .service-card-desc {
@@ -311,119 +307,292 @@ body {
     color: white;
 }
 
-/* Responsive */
-
-@media(max-width:992px){
-    .services-container{
-        padding:20px;
-    }
-
-    .toolbar{
-        flex-direction:column;
-        align-items:stretch;
-    }
-
-    .filter-group{
-        justify-content:center;
-    }
-
-    .btn-add{
-        width:100%;
-    }
-}
-
-
-@media(max-width:768px){
-    .page-header{
-        padding:20px;
-    }
-
-    .page-header h1{
-        font-size:1.7rem;
-    }
-
-    .page-header .d-flex{
-        flex-direction:column;
-        align-items:flex-start !important;
-        gap:15px;
-    }
-
-    .search-box{
-        min-width:100%;
-    }
-
-    .filter-group{
-        width:100%;
-        justify-content:center;
-    }
-}
-
-@media(max-width:576px){
-    .services-container{
-        padding:15px;
-    }
-
-    .page-header h1{
-        font-size:1.5rem;
-    }
-
-    .filter-group button{
-        flex:1;
-    }
-
-    .btn-add{
-        font-size:.95rem;
-    }
-}
-
 /* =======================================================
    LOGO
 ======================================================= */
-
-.menu-btn{
-position:fixed;
-top:20px;
-left:20px;
-width:70px;
-height:70px;
-cursor:pointer;
-z-index:1001;
+.menu-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    z-index: 1001;
 }
 
-.menu-btn img{
-width:100%;
-height:100%;
-object-fit:contain;
+.menu-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 /* =======================================================
    MENU
 ======================================================= */
-
-.menu{
-position:fixed;
-top:90px;
-left:-180px;
-width:180px;
-background:#4C1D95;
-border-radius:0 15px 15px 0;
-padding:10px 0;
-transition:.4s;
-z-index:1000;
+.menu {
+    position: fixed;
+    top: 90px;
+    left: -180px;
+    width: 180px;
+    background: #4C1D95;
+    border-radius: 0 15px 15px 0;
+    padding: 10px 0;
+    transition: .4s;
+    z-index: 1000;
 }
 
-.menu.activo{
-left:0;
+.menu.activo {
+    left: 0;
 }
 
-.menu a{
-display:block;
-padding:15px;
-color:white;
-text-decoration:none;
-font-weight:700;
+.menu a {
+    display: block;
+    padding: 15px;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
 }
 
-.menu a:hover{
-background:#6C2BD9;
+.menu a:hover {
+    background: #6C2BD9;
+}
+
+/* =======================================================
+   ESTILOS DE VALIDACIÓN
+======================================================= */
+
+/* Campo válido */
+.successInput {
+    border: 2px solid #43a047 !important;
+    background-color: #f0fff4 !important;
+    transition: all 0.3s ease;
+}
+
+/* Campo inválido */
+.errorInput {
+    border: 2px solid #e53935 !important;
+    background-color: #fff0f0 !important;
+    transition: all 0.3s ease;
+}
+
+/* Wrapper para input con ícono */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-wrapper .icono-validacion {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.input-wrapper .icono-validacion.visible {
+    opacity: 1;
+}
+
+/* Para textarea con ícono */
+.input-wrapper textarea ~ .icono-validacion {
+    top: 15px;
+    transform: none;
+}
+
+/* Ajuste para que los inputs del grupo campo usen el wrapper */
+.grupoCampo .input-wrapper input,
+.grupoCampo .input-wrapper textarea {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: .95rem;
+}
+
+.grupoCampo .input-wrapper input:focus,
+.grupoCampo .input-wrapper textarea:focus {
+    outline: none;
+    border-color: #4C1D95;
+    box-shadow: 0 0 0 3px rgba(76, 29, 149, .15);
+}
+
+/* Mensajes de error */
+.mensaje-error {
+    color: #e53935;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 5px;
+    min-height: 20px;
+    display: none;
+    animation: fadeInError 0.3s ease;
+}
+
+.mensaje-error.visible {
+    display: block;
+}
+
+/* Mensajes de éxito */
+.mensaje-exito {
+    color: #43a047;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 5px;
+    min-height: 20px;
+    display: none;
+    animation: fadeInExito 0.3s ease;
+}
+
+.mensaje-exito.visible {
+    display: block;
+}
+
+/* Animaciones */
+@keyframes fadeInError {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInExito {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mensajes del formulario */
+#mensajeAgregar.error,
+#mensajeEditar.error {
+    display: block !important;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+#mensajeAgregar.exito,
+#mensajeEditar.exito {
+    display: block !important;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+/* Contador de caracteres para descripción */
+.contador-caracteres {
+    font-size: 12px;
+    color: #6b7280;
+    text-align: right;
+    margin-top: 4px;
+}
+
+.contador-caracteres.excedido {
+    color: #e53935;
+}
+
+/* Responsive para validaciones */
+@media(max-width: 768px) {
+    .input-wrapper .icono-validacion {
+        font-size: 16px;
+        right: 10px;
+    }
+    
+    .mensaje-error,
+    .mensaje-exito {
+        font-size: 11px;
+        min-height: 18px;
+    }
+}
+
+@media(max-width: 576px) {
+    .input-wrapper .icono-validacion {
+        font-size: 14px;
+        right: 8px;
+    }
+    
+    .mensaje-error,
+    .mensaje-exito {
+        font-size: 10px;
+        min-height: 16px;
+    }
+}
+
+/* Responsive */
+@media(max-width: 992px) {
+    .services-container {
+        padding: 20px;
+    }
+
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group {
+        justify-content: center;
+    }
+
+    .btn-add {
+        width: 100%;
+    }
+}
+
+@media(max-width: 768px) {
+    .page-header {
+        padding: 20px;
+    }
+
+    .page-header h1 {
+        font-size: 1.7rem;
+    }
+
+    .page-header .d-flex {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 15px;
+    }
+
+    .search-box {
+        min-width: 100%;
+    }
+
+    .filter-group {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media(max-width: 576px) {
+    .services-container {
+        padding: 15px;
+    }
+
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .filter-group button {
+        flex: 1;
+    }
+
+    .btn-add {
+        font-size: .95rem;
+    }
 }

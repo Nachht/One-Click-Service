@@ -16,7 +16,7 @@
 
 <body>
 
-<!-- Botón menú -->
+    <!-- Botón menú -->
     <div class="menu-btn" id="menuBtn">
         <img src="../../assets/img/logo.png" alt="Logo">
     </div>
@@ -26,44 +26,35 @@
         <a href="../html/admin-servicios.html">Servicios</a>
     </nav>
 
-<!-- ============================================
-SECCIÓN PRINCIPAL DE SERVICIOS
-============================================ -->
+    <!-- ============================================
+    SECCIÓN PRINCIPAL DE SERVICIOS
+    ============================================ -->
     <section class="services-container" aria-label="Gestión de servicios">
 
-        <!-- ============================================
-    ENCABEZADO DE LA SECCIÓN
-    ============================================ -->
+        <!-- ENCABEZADO -->
         <header class="page-header">
             <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
                 <div>
-                    <h1>
-                        Gestión de Servicios
-                    </h1>
+                    <h1>📋 Gestión de Servicios</h1>
                     <p>Administra los servicios que se mostrarán en los apartados del usuario.</p>
                 </div>
                 <div>
                     <span class="badge bg-primary bg-opacity-10 text-primary p-2">
                         <i class="bi bi-info-circle" aria-hidden="true"></i>
-                        Total: <span id="totalCount" aria-label="Total de servicios">8</span> servicios
+                        Total: <span id="totalCount">0</span> servicios
                     </span>
                 </div>
             </div>
         </header>
 
-        <!-- ============================================
-    BARRA DE HERRAMIENTAS
-    ============================================ -->
+        <!-- BARRA DE HERRAMIENTAS -->
         <div class="toolbar" role="toolbar" aria-label="Barra de herramientas de servicios">
-
-            <!-- Buscador -->
             <div class="search-box" role="search">
                 <i class="bi bi-search" aria-hidden="true"></i>
                 <input type="text" id="searchInput" class="form-control" placeholder="Buscar servicios..."
                     aria-label="Buscar servicios por nombre o descripción" />
             </div>
 
-            <!-- Filtros -->
             <div class="filter-group" role="group" aria-label="Filtros de estado">
                 <button class="btn btn-filter btn-outline-secondary" id="filterAll" aria-pressed="true">
                     <i class="bi bi-list" aria-hidden="true"></i> Todos
@@ -79,16 +70,14 @@ SECCIÓN PRINCIPAL DE SERVICIOS
                 </button>
             </div>
 
-            <!-- Botón Agregar -->
-            <button class="btn btn-add" data-bs-toggle="modal" data-bs-target="#addServiceModal"
-                aria-label="Agregar nuevo servicio">
+            <button class="btn btn-add" id="btnAgregarServicio" aria-label="Agregar nuevo servicio">
                 <i class="bi bi-plus-lg" aria-hidden="true"></i> Agregar servicio
             </button>
         </div>
 
         <!-- CONTADOR DE RESULTADOS -->
         <div class="results-count" aria-live="polite">
-            Mostrando <span id="visibleCount" aria-label="Servicios visibles">8</span> servicios
+            Mostrando <span id="visibleCount">0</span> servicios
         </div>
 
         <!-- Cards de servicios -->
@@ -96,81 +85,132 @@ SECCIÓN PRINCIPAL DE SERVICIOS
 
     </section>
 
-    <!-- Ventana agregar -->
+    <!-- ============================================
+    MODAL AGREGAR SERVICIO CON VALIDACIONES
+    ============================================ -->
     <div id="modalAgregarServicio" class="fondoModal">
         <div class="ventanaModal">
             <div class="encabezadoModal">
-                <h2>Agregar servicio</h2>
+                <h2>➕ Agregar servicio</h2>
                 <button id="cerrarModalAgregar" class="botonCerrarModal">&times;</button>
             </div>
 
             <form id="formularioAgregarServicio">
+                <!-- Imagen -->
                 <div class="grupoCampo">
-                    <label for="imagenServicioAgregar">Imagen</label>
-                    <input type="file" id="imagenServicioAgregar" accept="image/*">
+                    <label for="imagenServicioAgregar">Imagen del Servicio</label>
+                    <div class="input-wrapper">
+                        <input type="file" id="imagenServicioAgregar" accept=".jpg,.jpeg,.png,.webp">
+                        <span class="icono-validacion" id="icono-imagenAgregar"></span>
+                    </div>
+                    <small class="mensaje-error" id="error-imagenAgregar"></small>
+                    <small class="mensaje-exito" id="exito-imagenAgregar">✓ Válido</small>
                 </div>
 
+                <!-- Nombre -->
                 <div class="grupoCampo">
                     <label for="nombreServicioAgregar">Nombre del servicio</label>
-                    <input type="text" id="nombreServicioAgregar" required>
+                    <div class="input-wrapper">
+                        <input type="text" id="nombreServicioAgregar" placeholder="Ej: Limpieza General" maxlength="30">
+                        <span class="icono-validacion" id="icono-nombreAgregar"></span>
+                    </div>
+                    <small class="mensaje-error" id="error-nombreAgregar"></small>
+                    <small class="mensaje-exito" id="exito-nombreAgregar">✓ Válido</small>
                 </div>
 
+                <!-- Descripción -->
                 <div class="grupoCampo">
-                    <label for="descripcionServicioAgregar">Descripción</label>
-                    <textarea id="descripcionServicioAgregar" rows="4" required></textarea>
+                    <label for="descripcionServicioAgregar">Descripción (50-1000 caracteres)</label>
+                    <div class="input-wrapper">
+                        <textarea id="descripcionServicioAgregar" rows="4" placeholder="Descripción detallada del servicio"></textarea>
+                        <span class="icono-validacion" id="icono-descripcionAgregar"></span>
+                    </div>
+                    <small class="mensaje-error" id="error-descripcionAgregar"></small>
+                    <small class="mensaje-exito" id="exito-descripcionAgregar">✓ Válido</small>
+                    <small class="contador-caracteres" id="contador-descripcionAgregar">0 / 1000 caracteres</small>
                 </div>
 
+                <!-- Precio -->
                 <div class="grupoCampo">
-                    <label for="precioServicioAgregar">Precio</label>
-                    <input type="number" id="precioServicioAgregar" required>
+                    <label for="precioServicioAgregar">Precio (COP)</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="precioServicioAgregar" placeholder="Ej: 150000">
+                        <span class="icono-validacion" id="icono-precioAgregar"></span>
+                    </div>
+                    <small class="mensaje-error" id="error-precioAgregar"></small>
+                    <small class="mensaje-exito" id="exito-precioAgregar">✓ Válido</small>
                 </div>
 
-                <button type="submit" class="botonGuardarServicio">
-                    Guardar servicio
-                </button>
+                <button type="submit" class="botonGuardarServicio">Guardar servicio</button>
+                <p id="mensajeAgregar" style="display:none; margin-top:10px; padding:10px; border-radius:8px; font-weight:bold;"></p>
             </form>
         </div>
     </div>
 
-    <!-- Ventana editar servicio -->
+    <!-- ============================================
+    MODAL EDITAR SERVICIO CON VALIDACIONES
+    ============================================ -->
     <div id="modalEditarServicio" class="fondoModal">
         <div class="ventanaModal">
             <div class="encabezadoModal">
-                <h2>Editar servicio</h2>
+                <h2>✏️ Editar servicio</h2>
                 <button id="cerrarModalEditar" class="botonCerrarModal">&times;</button>
             </div>
 
             <form id="formularioEditarServicio">
-
                 <input type="hidden" id="idServicioEditar">
 
+                <!-- Imagen -->
                 <div class="grupoCampo">
-                    <label for="imagenServicioEditar">Imagen</label>
-                    <input type="file" id="imagenServicioEditar" accept="image/*">
+                    <label for="imagenServicioEditar">Imagen (opcional)</label>
+                    <div class="input-wrapper">
+                        <input type="file" id="imagenServicioEditar" accept=".jpg,.jpeg,.png,.webp">
+                        <span class="icono-validacion" id="icono-imagenEditar"></span>
+                    </div>
+                    <small class="mensaje-error" id="error-imagenEditar"></small>
+                    <small class="mensaje-exito" id="exito-imagenEditar">✓ Válido</small>
                 </div>
 
+                <!-- Nombre -->
                 <div class="grupoCampo">
                     <label for="nombreServicioEditar">Nombre del servicio</label>
-                    <input type="text" id="nombreServicioEditar" required>
+                    <div class="input-wrapper">
+                        <input type="text" id="nombreServicioEditar" placeholder="Ej: Limpieza General" maxlength="30">
+                        <span class="icono-validacion" id="icono-nombreEditar"></span>
+                    </div>
+                    <small class="mensaje-error" id="error-nombreEditar"></small>
+                    <small class="mensaje-exito" id="exito-nombreEditar">✓ Válido</small>
                 </div>
 
+                <!-- Descripción -->
                 <div class="grupoCampo">
-                    <label for="descripcionServicioEditar">Descripción</label>
-                    <textarea id="descripcionServicioEditar" rows="4" required></textarea>
+                    <label for="descripcionServicioEditar">Descripción (50-1000 caracteres)</label>
+                    <div class="input-wrapper">
+                        <textarea id="descripcionServicioEditar" rows="4" placeholder="Descripción detallada del servicio"></textarea>
+                        <span class="icono-validacion" id="icono-descripcionEditar"></span>
+                    </div>
+                    <small class="mensaje-error" id="error-descripcionEditar"></small>
+                    <small class="mensaje-exito" id="exito-descripcionEditar">✓ Válido</small>
+                    <small class="contador-caracteres" id="contador-descripcionEditar">0 / 1000 caracteres</small>
                 </div>
 
+                <!-- Precio -->
                 <div class="grupoCampo">
-                    <label for="precioServicioEditar">Precio</label>
-                    <input type="number" id="precioServicioEditar" required>
+                    <label for="precioServicioEditar">Precio (COP)</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="precioServicioEditar" placeholder="Ej: 150000">
+                        <span class="icono-validacion" id="icono-precioEditar"></span>
+                    </div>
+                    <small class="mensaje-error" id="error-precioEditar"></small>
+                    <small class="mensaje-exito" id="exito-precioEditar">✓ Válido</small>
                 </div>
 
-                <button type="submit" class="botonGuardarServicio">
-                    Actualizar servicio
-                </button>
-
+                <button type="submit" class="botonGuardarServicio">Actualizar servicio</button>
+                <p id="mensajeEditar" style="display:none; margin-top:10px; padding:10px; border-radius:8px; font-weight:bold;"></p>
             </form>
         </div>
     </div>
+
     <div id="footer-container"></div>
 
     <script src="../footer/footer_admin.js"></script>

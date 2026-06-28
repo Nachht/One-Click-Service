@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +6,6 @@
   font-family: 'Nunito', sans-serif;
 }
 
->>>>>>> origin/main
 .footer-admin {
   background: linear-gradient(135deg, #3b0a75, #4c1d95);
   color: #fff;
@@ -31,14 +29,14 @@
 }
 
 .logo-box img {
-<<<<<<< HEAD
+
   width: 130px;
   margin-bottom: 10px;
-=======
+
   width: 50%;
   height: 180px;
   object-fit: contain;
->>>>>>> origin/main
+
 }
 
 .footer-section h3 {
@@ -66,11 +64,11 @@
 }
 
 .footer-section a:hover {
-<<<<<<< HEAD
+
   color: #22d3ee;
-=======
+
   color: #EC4899;
->>>>>>> origin/main
+
   transform: translateX(6px);
 }
 

@@ -2,51 +2,46 @@
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Administrador de Perfiles</title>
-
+    <title>Administrador - Gestión de Usuarios</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="../css/perfil_administrador.css">
     <link rel="stylesheet" href="../footer/footer_admin.css">
-
     <link rel="icon" href="../../assets/img/logo.png">
-
 </head>
 
 <body>
 
+  <!-- Botón menú -->
     <div class="menu-btn" id="menuBtn">
         <img src="../../assets/img/logo.png" alt="Logo">
     </div>
 
     <nav class="menu" id="menu">
-<<<<<<< HEAD
-        <a href="perfil.html">Perfiles</a>
-        <a href="../../servicios/html/servicios.html">Servicios</a>
-=======
         <a href="perfil_administrador.html">Perfiles</a>
         <a href="../html/admin-servicios.html">Servicios</a>
->>>>>>> origin/main
     </nav>
-
-    <section class="administrador">
-
-        <h1>Administración de Perfiles</h1>
-
-        <p class="descripcion">Gestiona los perfiles de los administradores del sistema</p>
-
-        <div class="acciones">
-            <button id="agregarPerfil">+ Agregar Perfil</button>
+    
+    <!-- ========================= -->
+    <!-- SECCIÓN ADMIN -->
+    <!-- ========================= -->
+    <section class="admin">
+        <div class="admin-header">
+            <h1>👤 Gestión de Usuarios</h1>
+            <p class="descripcion">Administra los usuarios registrados en el sistema</p>
         </div>
 
-        <div class="contenedorTarjetas" id="contenedorTarjetas">
-            <!-- Las tarjetas se generarán aquí con JavaScript -->
-        </div>
+        <div class="contenedor">
+            <!-- Botón agregar -->
+            <div class="header-actions">
+                <button id="agregarPerfil" class="btn-agregar">➕ Agregar Usuario</button>
+                <span class="total-usuarios">Total: <strong id="totalUsuarios">0</strong> usuarios</span>
+            </div>
 
+            <!-- Contenedor de tarjetas -->
+            <div id="contenedorTarjetas"></div>
+        </div>
     </section>
 
     <div id="footer-container"></div>

@@ -2,19 +2,13 @@
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Perfil Usuario</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="../css/perfil.css">
     <link rel="stylesheet" href="../footer/footer_admin.css">
-
     <link rel="icon" href="../../assets/img/logo.png">
-
 </head>
 
 <body>
@@ -22,88 +16,159 @@
     <a href="perfil_administrador.html" class="volver">←</a>
 
     <section class="perfil">
-
         <h1>Perfil de Usuario</h1>
-
         <p class="descripcion">Actualiza tu información personal de forma segura.</p>
 
         <div class="contenedor">
-
             <!-- FOTO -->
             <div class="fotoPerfil">
                 <label for="foto">Foto de Perfil</label>
                 <input type="file" id="foto" accept=".jpg,.jpeg,.png,.webp">
-
                 <img id="previewFoto" style="width:120px; border-radius:10px; margin-top:10px; display:block;">
+                <small id="mensajeFoto"></small>
             </div>
 
             <!-- FORMULARIO -->
             <form id="formulario">
-
                 <div class="grid">
-
-                    <div>
+                    <!-- Tipo Documento -->
+                    <div class="campo-group">
                         <label>Tipo de Documento</label>
                         <select id="tipoDocumento">
                             <option value="">Seleccione</option>
-                            <option>Cédula de Ciudadanía</option>
-                            <option>Cédula de Extranjería</option>
-                            <option>Pasaporte</option>
-                            <option>PPT</option>
+                            <option value="cedula">Cédula de Ciudadanía</option>
+                            <option value="extranjeria">Cédula de Extranjería</option>
+                            <option value="pasaporte">Pasaporte</option>
+                            <option value="extranjero">Documento de Identidad Extranjero</option>
                         </select>
+                        <small class="mensaje-error" id="error-tipoDocumento"></small>
+                        <small class="mensaje-exito" id="exito-tipoDocumento">✓ Válido</small>
                     </div>
 
-                    <div>
+                    <!-- Documento -->
+                    <div class="campo-group">
                         <label>Documento</label>
-                        <input type="text" id="documento">
+                        <div class="input-wrapper">
+                            <input type="text" id="documento" placeholder="Ingrese su número de documento">
+                            <span class="icono-validacion" id="icono-documento"></span>
+                        </div>
+                        <small class="mensaje-error" id="error-documento"></small>
+                        <small class="mensaje-exito" id="exito-documento">✓ Válido</small>
                     </div>
 
-                    <div>
+                    <!-- Nombres -->
+                    <div class="campo-group">
                         <label>Nombres</label>
-                        <input type="text" id="nombres">
+                        <div class="input-wrapper">
+                            <input type="text" id="nombres" placeholder="Ej: Juan Carlos" maxlength="15">
+                            <span class="icono-validacion" id="icono-nombres"></span>
+                        </div>
+                        <small class="mensaje-error" id="error-nombres">Los nombres deben tener entre 3 y 15 caracteres y solo letras</small>
+                        <small class="mensaje-exito" id="exito-nombres">✓ Válido</small>
                     </div>
 
-                    <div>
+                    <!-- Apellidos -->
+                    <div class="campo-group">
                         <label>Apellidos</label>
-                        <input type="text" id="apellidos">
+                        <div class="input-wrapper">
+                            <input type="text" id="apellidos" placeholder="Ej: Pérez Gómez" maxlength="125">
+                            <span class="icono-validacion" id="icono-apellidos"></span>
+                        </div>
+                        <small class="mensaje-error" id="error-apellidos">Los apellidos deben tener entre 5 y 125 caracteres y solo letras</small>
+                        <small class="mensaje-exito" id="exito-apellidos">✓ Válido</small>
                     </div>
 
-                    <div>
+                    <!-- Celular -->
+                    <div class="campo-group">
                         <label>Celular</label>
-                        <input type="text" id="celular">
+                        <div class="input-wrapper">
+                            <input type="text" id="celular" placeholder="Ej: 3001234567" maxlength="10">
+                            <span class="icono-validacion" id="icono-celular"></span>
+                        </div>
+                        <small class="mensaje-error" id="error-celular"></small>
+                        <small class="mensaje-exito" id="exito-celular">✓ Válido</small>
                     </div>
 
-                    <div>
+                    <!-- Dirección -->
+                    <div class="campo-group">
                         <label>Dirección</label>
-                        <input type="text" id="direccion">
+                        <div class="input-wrapper">
+                            <input type="text" id="direccion" placeholder="Ej: Calle 123 #45-67">
+                            <span class="icono-validacion" id="icono-direccion"></span>
+                        </div>
+                        <small class="mensaje-error" id="error-direccion"></small>
+                        <small class="mensaje-exito" id="exito-direccion">✓ Válido</small>
                     </div>
 
-                    <div>
+                    <!-- Correo -->
+                    <div class="campo-group">
                         <label>Correo</label>
-                        <input type="email" id="correo">
+                        <div class="input-wrapper">
+                            <input type="email" id="correo" placeholder="Ej: usuario@gmail.com">
+                            <span class="icono-validacion" id="icono-correo"></span>
+                        </div>
+                        <small class="mensaje-error" id="error-correo">El correo debe tener @ y una extensión válida (ej: usuario@gmail.com)</small>
+                        <small class="mensaje-exito" id="exito-correo">✓ Válido</small>
                     </div>
 
-                    <div>
+                    <!-- Ciudad -->
+                    <div class="campo-group">
                         <label>Ciudad</label>
-                        <input type="text" id="ciudad">
+                        <div class="input-wrapper">
+                            <input type="text" id="ciudad" placeholder="Ej: Bogotá">
+                            <span class="icono-validacion" id="icono-ciudad"></span>
+                        </div>
+                        <small class="mensaje-error" id="error-ciudad"></small>
+                        <small class="mensaje-exito" id="exito-ciudad">✓ Válido</small>
                     </div>
 
-                    <div class="full">
+                    <!-- Tipo de Usuario (Cliente/Empleado) -->
+                    <div class="campo-group">
+                        <label>Tipo de Usuario</label>
+                        <select id="tipoUsuario">
+                            <option value="">Seleccione</option>
+                            <option value="cliente">Cliente</option>
+                            <option value="empleado">Empleado</option>
+                        </select>
+                        <small class="mensaje-error" id="error-tipoUsuario">Seleccione un tipo de usuario</small>
+                        <small class="mensaje-exito" id="exito-tipoUsuario">✓ Válido</small>
+                    </div>
+
+                    <!-- Servicio (solo para empleados) -->
+                    <div class="campo-group" id="servicioGroup" style="display:none;">
+                        <label>Servicio que presta</label>
+                        <select id="servicio">
+                            <option value="">Seleccione un servicio</option>
+                            <option value="limpieza">Limpieza</option>
+                            <option value="seguridad">Seguridad</option>
+                            <option value="mantenimiento">Mantenimiento</option>
+                            <option value="jardineria">Jardineria</option>
+                            <option value="cocina">Cocina</option>
+                            <option value="recepcion">Recepción</option>
+                            <option value="mensajeria">Mensajería</option>
+                            <option value="transporte">Transporte</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                        <small class="mensaje-error" id="error-servicio">Seleccione un servicio</small>
+                        <small class="mensaje-exito" id="exito-servicio">✓ Válido</small>
+                    </div>
+
+                    <!-- Contraseña -->
+                    <div class="full campo-group">
                         <label>Contraseña</label>
-                        <input type="password" id="password">
+                        <div class="input-wrapper">
+                            <input type="password" id="password" placeholder="Mínimo 8 caracteres">
+                            <span class="icono-validacion" id="icono-password"></span>
+                        </div>
+                        <small class="mensaje-error" id="error-password"></small>
+                        <small class="mensaje-exito" id="exito-password">✓ Válido</small>
                     </div>
-
                 </div>
 
-                <!-- SOLO GUARDAR -->
                 <button type="submit">Guardar Cambios</button>
-
                 <p id="mensajeFormulario"></p>
-
             </form>
-
         </div>
-
     </section>
 
     <div id="footer-container"></div>
