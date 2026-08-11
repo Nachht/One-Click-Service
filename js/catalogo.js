@@ -79,29 +79,60 @@ function obtenerUrlImagenCatalogo(imagen) {
 // ============================================
 // 1. OBTENER PRODUCTOS CON CACHÉ INTELIGENTE
 // ============================================
-async function obtenerProductosBackend() {
-    try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            throw new Error('No autenticado');
-        }
-
-        const response = await fetch(`${API_URL}/api/products/public`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
+async function obtenerProductosBackend(forceRefresh = false) {
+    // 🔥 SI SE SOLICITA REFRESH, SALTAR CACHÉ
+    if (forceRefresh) {
+        console.log('🔄 Refresh forzado - ignorando caché');
+        localStorage.removeItem(CLAVE_PRODUCTOS_KUMO);
+        localStorage.removeItem(`${CLAVE_PRODUCTOS_KUMO}_time`);
+    } else {
+        // Verificar caché válida
+        const cache = localStorage.getItem(CLAVE_PRODUCTOS_KUMO);
+        const cacheTime = localStorage.getItem(`${CLAVE_PRODUCTOS_KUMO}_time`);
+        
+        if (cache && cacheTime) {
+            const elapsed = Date.now() - parseInt(cacheTime);
+            if (elapsed < CACHE_EXPIRATION) {
+                console.log('📦 Usando caché de productos');
+                return JSON.parse(cache);
             }
+        }
+    }
+
+    try {
+        console.log('🌐 Cargando productos desde el backend...');
+        
+        // 🔥 IMPORTANTE: NO ENVIAR TOKEN (es público)
+        const response = await fetch(`${API_CONFIG.BASE_URL}/products/public`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache'
+            }
+            // ⚠️ SIN Authorization: Bearer token (es público)
         });
 
         if (!response.ok) {
-            throw new Error('Error al obtener productos');
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
 
-        const data = await response.json();
-        console.log('✅ Productos obtenidos del backend:', data);
-        return data;
+        const productos = await response.json();
+        
+        // Guardar en caché con timestamp
+        localStorage.setItem(CLAVE_PRODUCTOS_KUMO, JSON.stringify(productos));
+        localStorage.setItem(`${CLAVE_PRODUCTOS_KUMO}_time`, Date.now().toString());
+        
+        console.log('✅ Productos cargados desde el backend:', productos.length);
+        return productos;
+
     } catch (error) {
-        console.error('❌ Error al obtener productos:', error);
+        console.error('❌ Error al cargar productos del backend:', error);
+        
+        // Fallback: cargar desde caché aunque esté expirada
+        const cached = localStorage.getItem(CLAVE_PRODUCTOS_KUMO);
+        if (cached) {
+            console.log('⚠️ Usando caché de respaldo (backend falló)');
+            return JSON.parse(cached);
+        }
         return [];
     }
 }
@@ -134,10 +165,13 @@ async function buscarProductosBackend(termino) {
     // 🔥 SEGUNDO: Buscar en el backend si no hay en caché
     try {
         console.log('🌐 Buscando en el backend...');
-        const response = await fetch(`${API_URL}/api/products/public/search?nombre=${encodeURIComponent(termino)}`, {
+        
+        // 🔥 IMPORTANTE: NO ENVIAR TOKEN (es público)
+        const response = await fetch(`${API_CONFIG.BASE_URL}/products/public/search?nombre=${encodeURIComponent(termino)}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
+            // ⚠️ SIN Authorization: Bearer token (es público)
         });
 
         if (!response.ok) {
@@ -376,8 +410,28 @@ function handleAgregarCarrito(event) {
 async function agregarAlCarrito(producto) {
     const token = localStorage.getItem('token');
     if (!token) {
-        alert('Debes iniciar sesión para agregar productos al carrito');
-        window.location.href = '../inicio_sesion/inicio_sesion.html';
+        mostrarModalKumo({
+            icono: "bi-box-arrow-in-right",
+            tipoIcono: "",
+            titulo: "Inicia sesión",
+            mensajeHTML: "Debes iniciar sesión para agregar productos al carrito.<br><br>¿Ya tienes una cuenta?",
+            botones: [
+                { 
+                    texto: "Iniciar sesión", 
+                    clase: "modal-kumo-btn-confirmar",
+                    accion: () => {
+                        window.location.href = '../inicio_sesion/inicio_sesion.html';
+                    }
+                },
+                { 
+                    texto: "Registrarse", 
+                    clase: "modal-kumo-btn-ok",
+                    accion: () => {
+                        window.location.href = '../registro/registro.html';
+                    }
+                }
+            ]
+        });
         return;
     }
 
