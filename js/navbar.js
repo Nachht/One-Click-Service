@@ -23,11 +23,15 @@ function cargarBootstrap() {
 
 //FUNCIONES DE AUTENTICACIÓN
 function obtenerUsuarioLogueado() {
-    const usuario = localStorage.getItem("usuarioActivo");
+    // Intentar con diferentes claves de localStorage
+    const usuario = localStorage.getItem("usuarioActivo") || localStorage.getItem("usuario") || localStorage.getItem("kumo_usuario");
     if (usuario) {
         try {
-            return JSON.parse(usuario);
+            const parsed = JSON.parse(usuario);
+            console.log('👤 Usuario obtenido:', parsed);
+            return parsed;
         } catch (e) {
+            console.error('❌ Error al parsear usuario:', e);
             return null;
         }
     }
@@ -40,9 +44,18 @@ function estaLogueado() {
 
 function cerrarSesion() {
     console.log("🚪 Cerrando sesión...");
+    
+    // Limpiar datos de sesión
     localStorage.removeItem("usuarioActivo");
     localStorage.removeItem("kumo_usuario");
-    window.location.reload();
+    localStorage.removeItem("token");
+    // Opcional: eliminar carrito al cerrar sesión
+    // localStorage.removeItem("carrito");
+    
+    console.log("✅ Sesión cerrada correctamente");
+    
+    // 🔥 REDIRIGIR AL INDEX
+    window.location.href = "../inicio/index.html";
 }
 
 //OFFCANVAS DEL CARRITO (VERSIÓN COMPLETA Y ESTILIZADA)
@@ -171,6 +184,7 @@ function crearBadge() {
 }
 
 // 6. ACTUALIZAR BADGE DEL CARRITO
+// En navbar.js
 function actualizarBadgeCarrito() {
     const usuario = obtenerUsuarioLogueado();
     const carritoBtn = document.querySelector('.btn-cart-offcanvas');
@@ -182,11 +196,11 @@ function actualizarBadgeCarrito() {
     if (!usuario) {
         if (badge) {
             badge.style.display = 'none';
-            console.log('👤 Usuario no logueado, badge oculto');
         }
         return;
     }
 
+    // 🔥 Leer carrito desde localStorage
     const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
 
@@ -222,6 +236,36 @@ function actualizarMenuUsuario() {
     if (usuario) {
         const nombre = usuario.nombre || usuario.nombres || 'Usuario';
         const primerNombre = nombre.split(' ')[0];
+        
+        // 🔥 CORREGIDO: Comparar correctamente el rol (mayúsculas/minúsculas)
+        const esAdmin = usuario.rol && (usuario.rol.toLowerCase() === 'admin' || usuario.rol.toLowerCase() === 'administrador');
+
+        console.log(`🔍 Usuario: ${primerNombre}, esAdmin: ${esAdmin}, rol: ${usuario.rol}`);
+
+        // 🔥 Construir el menú según el rol
+        let itemsMenu = '';
+        
+        if (esAdmin) {
+            // 👑 PARA ADMIN: Mostrar Panel Admin con opciones de gestión
+            console.log('👑 Mostrando menú de ADMIN');
+            itemsMenu = `
+                <li><a class="dropdown-item" href="../perfil/perfil.html"><i class="bi bi-person"></i> Mi perfil</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="../administrador/html/admin-servicios.html"><i class="bi bi-shield-lock"></i> Admin Productos</a></li>
+                <li><a class="dropdown-item" href="../administrador/html/admin-pedidos.html"><i class="bi bi-box-seam"></i> Admin Pedidos</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><button class="dropdown-item text-danger" onclick="cerrarSesion()"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</button></li>
+            `;
+        } else {
+            // 👤 PARA CLIENTE: Mostrar Mis pedidos
+            console.log('👤 Mostrando menú de CLIENTE');
+            itemsMenu = `
+                <li><a class="dropdown-item" href="../perfil/perfil.html"><i class="bi bi-person"></i> Mi perfil</a></li>
+                <li><a class="dropdown-item" href="../pedidos/pedidos.html"><i class="bi bi-box-seam"></i> Mis pedidos</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><button class="dropdown-item text-danger" onclick="cerrarSesion()"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</button></li>
+            `;
+        }
 
         menuContainer.innerHTML = `
             <div class="dropdown">
@@ -230,17 +274,14 @@ function actualizarMenuUsuario() {
                     <span class="user-name">${primerNombre}</span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="../perfil/perfil.html"><i class="bi bi-person"></i> Mi perfil</a></li>
-                    <li><a class="dropdown-item" href="../pedidos/pedidos.html"><i class="bi bi-box-seam"></i> Mis pedidos</a></li>
-                    ${usuario.rol === 'admin' ? `
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="../administrador/html/admin-servicios.html"><i class="bi bi-shield-lock"></i> Panel Admin</a></li>
-                    ` : ''}
-                    <li><hr class="dropdown-divider"></li>
-                    <li><button class="dropdown-item text-danger" onclick="cerrarSesion()"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</button></li>
+                    ${itemsMenu}
                 </ul>
             </div>
         `;
+        
+        // Cargar carrito desde backend al loguearse
+        setTimeout(cargarCarritoAlLoguearse, 500);
+        
     } else {
         menuContainer.innerHTML = `
             <a href="../inicio_sesion/inicio_sesion.html" class="btn-login">
@@ -253,7 +294,34 @@ function actualizarMenuUsuario() {
     }
 
     cuentaLink.replaceWith(menuContainer);
+    
+    // Reinicializar dropdowns después de actualizar el menú
+    setTimeout(inicializarDropdowns, 100);
 }
+
+// ============================================
+// CARGAR CARRITO DESDE BACKEND AL LOGIN
+// ============================================
+async function cargarCarritoAlLoguearse() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.log('⚠️ Usuario no autenticado');
+        return;
+    }
+
+    try {
+        // Esperar a que carrito-service.js esté cargado
+        if (typeof sincronizarCarritoLocalConBackend === 'function') {
+            await sincronizarCarritoLocalConBackend();
+        } else {
+            console.warn('⚠️ carrito-service.js no está cargado');
+        }
+    } catch (error) {
+        console.error('❌ Error al cargar carrito:', error);
+    }
+}
+
+
 
 //INICIALIZAR DROPDOWNS
 function inicializarDropdowns() {

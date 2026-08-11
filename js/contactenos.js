@@ -16,6 +16,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const mensajeFormulario = document.getElementById("mensajeFormulario");
 
+    // ============================================
+    // 🔥 CONFIGURACIÓN DE API (NUEVO)
+    // ============================================
+    const API_URL = 'http://localhost:8081';
+
+    // ============================================
+    // 🔥 FUNCIÓN PARA ENVIAR AL BACKEND (NUEVO)
+    // ============================================
+    async function enviarAlBackend(datos) {
+        try {
+            const response = await fetch(`${API_URL}/api/contact`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datos)
+            });
+
+            if (!response.ok) {
+                const error = await response.text();
+                throw new Error(error || 'Error al enviar el mensaje');
+            }
+
+            const data = await response.json();
+            console.log('✅ Mensaje enviado al backend:', data);
+            return { success: true, data };
+        } catch (error) {
+            console.error('❌ Error al enviar mensaje:', error);
+            return { success: false, error: error.message };
+        }
+    }
+
     // CARGAR DATOS GUARDADOS (localStorage)
     function cargarDatosGuardados() {
         const datos = JSON.parse(localStorage.getItem("contactoKumo")) || {};
@@ -180,8 +212,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return valido;
     }
 
-    // ENVÍO DEL FORMULARIO (SIN FORMSPREE)
-    formulario.addEventListener("submit", function (e) {
+    // ============================================
+    // 🔥 ENVÍO DEL FORMULARIO (MODIFICADO CON BACKEND)
+    // ============================================
+    formulario.addEventListener("submit", async function (e) {
         e.preventDefault();
 
         const nombreOk = validarNombre();
@@ -196,14 +230,39 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        // 🔥 Mostrar estado de envío
         mensajeFormulario.textContent = "📨 Enviando mensaje...";
         mensajeFormulario.className = "mensajeExito";
 
-        // Simular envío (delay de 1s)
-        setTimeout(() => {
+        // 🔥 Deshabilitar botón para evitar doble envío
+        const btnEnviar = formulario.querySelector('button[type="submit"]');
+        if (btnEnviar) {
+            btnEnviar.disabled = true;
+            btnEnviar.textContent = 'Enviando...';
+        }
 
-            // ===== ALERT DE ÉXITO =====
-            alert("✅ ¡Mensaje enviado con éxito!\n\nNos pondremos en contacto contigo pronto. 💜");
+        // 🔥 Preparar datos para el backend
+        const datos = {
+            nombre: nombre.value.trim(),
+            email: correo.value.trim(),
+            telefono: telefono.value.trim(),
+            asunto: asunto.value,
+            mensaje: mensaje.value.trim()
+        };
+
+        // 🔥 ENVIAR AL BACKEND
+        const resultado = await enviarAlBackend(datos);
+
+        // 🔥 Restaurar botón
+        if (btnEnviar) {
+            btnEnviar.disabled = false;
+            btnEnviar.textContent = 'Enviar mensaje';
+        }
+
+        if (resultado.success) {
+            // ✅ Éxito
+            mensajeFormulario.textContent = "✅ ¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.";
+            mensajeFormulario.className = "mensajeExito";
 
             // Limpiar formulario
             formulario.reset();
@@ -215,9 +274,6 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelectorAll("input, textarea, select").forEach(campo => {
                 campo.classList.remove("successInput", "errorInput");
             });
-
-            mensajeFormulario.textContent = "";
-            mensajeFormulario.className = "";
 
             // Eliminar datos guardados
             localStorage.removeItem("contactoKumo");
@@ -232,6 +288,10 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             localStorage.setItem("contactoKumoHistorial", JSON.stringify(historial));
 
-        }, 1000);
+        } else {
+            // ❌ Error
+            mensajeFormulario.textContent = `❌ Error al enviar el mensaje: ${resultado.error}`;
+            mensajeFormulario.className = "mensajeError";
+        }
     });
 });

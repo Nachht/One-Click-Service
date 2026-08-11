@@ -1,27 +1,13 @@
-const CLAVE_PRODUCTOS_KUMO = "kumo_productos";
+// ============================================
+// CATÁLOGO - CONEXIÓN CON EL BACKEND (MEJORADO)
+// ============================================
 
-//categorias
-const nombresCategoria = {
-    manga: "Manga",
-    figura: "Figura",
-    merch: "Merch"
-};
+const CLAVE_PRODUCTOS_KUMO = "kumo_productos_cache";
+const CACHE_EXPIRATION = 5 * 60 * 1000; // 5 minutos
 
-// Contenedores fijos categorias
-const contenedoresPorCategoria = {
-    manga: document.getElementById("productosCategoriaManga"),
-    figura: document.getElementById("productosCategoriaFigura"),
-    merch: document.getElementById("productosCategoriaMerch")
-};
-
-// Párrafos fijos categorias
-const contadoresPorCategoria = {
-    manga: document.getElementById("contadorSeccionManga"),
-    figura: document.getElementById("contadorSeccionFigura"),
-    merch: document.getElementById("contadorSeccionMerch")
-};
-
-//variables
+// ============================================
+// 🔥 VARIABLES (RESTAURADAS)
+// ============================================
 const inputBuscadorCatalogo = document.getElementById("buscadorCatalogo");
 const btnLimpiarBusquedaCatalogo = document.getElementById("btnLimpiarBusquedaCatalogo");
 const contadorCatalogoTotal = document.getElementById("contadorCatalogoTotal");
@@ -29,7 +15,190 @@ const contadorCatalogoVisibles = document.getElementById("contadorCatalogoVisibl
 let productosCatalogo = [];
 let textoBusquedaCatalogo = "";
 
-// precio formateado
+// ============================================
+// CATEGORÍAS
+// ============================================
+const nombresCategoria = {
+    manga: "Manga",
+    figura: "Figura",
+    merch: "Merch"
+};
+
+const contenedoresPorCategoria = {
+    manga: document.getElementById("productosCategoriaManga"),
+    figura: document.getElementById("productosCategoriaFigura"),
+    merch: document.getElementById("productosCategoriaMerch")
+};
+
+const contadoresPorCategoria = {
+    manga: document.getElementById("contadorSeccionManga"),
+    figura: document.getElementById("contadorSeccionFigura"),
+    merch: document.getElementById("contadorSeccionMerch")
+};
+
+
+// ============================================
+// 🔥 OBTENER URL CORRECTA DE LA IMAGEN
+// ============================================
+function obtenerUrlImagenCatalogo(imagen) {
+    // Si no hay imagen, usar la de respaldo
+    if (!imagen) {
+        return '../assets/img/logo.png';
+    }
+    
+    // Si es Base64 (empieza con data:image) - imágenes creadas desde admin
+    if (imagen.startsWith('data:image')) {
+        return imagen;
+    }
+    
+    // Si es logo.png o logo.png (imágenes por defecto)
+    if (imagen === 'logo.png' || imagen === 'logo.png') {
+        return '../assets/img/logo.png';
+    }
+    
+    // Si ya es una URL completa (http o https)
+    if (imagen.startsWith('http://') || imagen.startsWith('https://')) {
+        return imagen;
+    }
+    
+    // Si es una ruta relativa (../../ o ./)
+    if (imagen.startsWith('../../') || imagen.startsWith('./') || imagen.startsWith('../')) {
+        return imagen;
+    }
+    
+    // Si es un nombre de archivo (subido al servidor)
+    // Excluir cualquier cosa que parezca una ruta
+    if (!imagen.includes('/') && !imagen.includes('\\')) {
+        return `http://localhost:8081/uploads/${imagen}`;
+    }
+    
+    // Fallback: devolver la imagen como está
+    return imagen;
+}
+
+// ============================================
+// 1. OBTENER PRODUCTOS CON CACHÉ INTELIGENTE
+// ============================================
+async function obtenerProductosBackend() {
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            throw new Error('No autenticado');
+        }
+
+        const response = await fetch(`${API_URL}/api/products/public`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al obtener productos');
+        }
+
+        const data = await response.json();
+        console.log('✅ Productos obtenidos del backend:', data);
+        return data;
+    } catch (error) {
+        console.error('❌ Error al obtener productos:', error);
+        return [];
+    }
+}
+
+
+// ============================================
+// 2. BUSCAR PRODUCTOS (OPTIMIZADO)
+// ============================================
+async function buscarProductosBackend(termino) {
+    if (!termino || termino.trim() === '') {
+        // Si no hay término, cargar todos (usar caché primero)
+        return await obtenerProductosBackend();
+    }
+    
+    // 🔥 PRIMERO: Buscar en la caché local (más rápido)
+    const cached = localStorage.getItem(CLAVE_PRODUCTOS_KUMO);
+    if (cached) {
+        const productos = JSON.parse(cached);
+        const filtrados = productos.filter(p => 
+            p.nombre.toLowerCase().includes(termino.toLowerCase()) ||
+            (p.descripcion && p.descripcion.toLowerCase().includes(termino.toLowerCase()))
+        );
+        
+        if (filtrados.length > 0) {
+            console.log('🔍 Productos encontrados en caché:', filtrados.length);
+            return filtrados;
+        }
+    }
+    
+    // 🔥 SEGUNDO: Buscar en el backend si no hay en caché
+    try {
+        console.log('🌐 Buscando en el backend...');
+        const response = await fetch(`${API_URL}/api/products/public/search?nombre=${encodeURIComponent(termino)}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+
+        const productos = await response.json();
+        console.log('✅ Productos encontrados en backend:', productos.length);
+        return productos;
+
+    } catch (error) {
+        console.error('❌ Error al buscar productos:', error);
+        return [];
+    }
+}
+
+// ============================================
+// 3. TRANSFORMAR PRODUCTOS DEL BACKEND AL FORMATO DEL FRONTEND
+// ============================================
+function transformarProductoBackend(producto) {
+    // Determinar la categoría
+    let categoria = 'merch';
+    if (producto.category) {
+        const nombreCat = producto.category.nombre?.toLowerCase() || '';
+        if (nombreCat.includes('manga')) categoria = 'manga';
+        else if (nombreCat.includes('figura')) categoria = 'figura';
+        else if (nombreCat.includes('merch')) categoria = 'merch';
+    }
+
+    return {
+        id: producto.id,
+        nombre: producto.nombre,
+        descripcion: producto.descripcion || '',
+        precio: producto.precio,
+        stock: producto.stock || 0,
+        // 🔥 USAR LA NUEVA FUNCIÓN PARA LA IMAGEN
+        imagen: obtenerUrlImagenCatalogo(producto.imagen),
+        categoria: categoria,
+        activo: producto.activo !== false
+    };
+}
+
+// ============================================
+// 4. CARGAR PRODUCTOS EN EL CATÁLOGO
+// ============================================
+async function cargarProductosCatalogo(forceRefresh = false) {
+    try {
+        const productosBackend = await obtenerProductosBackend(forceRefresh);
+        productosCatalogo = productosBackend.map(transformarProductoBackend);
+        console.log('✅ Productos cargados:', productosCatalogo.length);
+        return productosCatalogo;
+    } catch (error) {
+        console.error('❌ Error al cargar productos:', error);
+        productosCatalogo = [];
+        return [];
+    }
+}
+
+// ============================================
+// 5. FORMATEAR PRECIO
+// ============================================
 function formatearPrecio(precio) {
     return Number(precio).toLocaleString("es-CO", {
         style: "currency",
@@ -38,51 +207,57 @@ function formatearPrecio(precio) {
     });
 }
 
-// productos desde el admin
-function cargarProductosCatalogo() {
-    try {
-
-        const datosGuardados = localStorage.getItem(CLAVE_PRODUCTOS_KUMO);
-        productosCatalogo = datosGuardados ? JSON.parse(datosGuardados) : [];
-
-    } catch (error) {
-
-        console.error("No se pudieron leer los productos del catálogo:", error);
-        productosCatalogo = [];
-    }
-}
-
-// tarjeta del producto
+// ============================================
+// 6. CREAR TARJETA DE PRODUCTO
+// ============================================
 function crearTarjetaProductoCatalogo(producto) {
     const columna = document.createElement("div");
     columna.className = "col-lg-3 col-md-4 col-sm-6";
     const nombreCategoria = nombresCategoria[producto.categoria] || producto.categoria;
+    
+    const imagenSrc = producto.imagen || '../assets/img/logo.png';
+    const tieneStock = producto.stock > 0;
+    const estadoTexto = tieneStock ? `Stock: ${producto.stock}` : "Agotado";
+    const estadoClase = tieneStock ? "" : "agotado";
+    const botonDisabled = tieneStock ? "" : "disabled";
+    const botonClase = tieneStock ? "botonAgregarCarrito" : "botonAgregarCarrito deshabilitado";
+    
     columna.innerHTML = `
-        <div class="tarjetaProductoCatalogo">
+        <div class="tarjetaProductoCatalogo ${estadoClase}">
             <div class="contenedorImagenCatalogo">
-                <img src="${producto.imagen}" alt="${producto.nombre}">
+                <img src="${imagenSrc}" 
+                     alt="${producto.nombre}"
+                     loading="lazy"
+                     onerror="this.src='../assets/img/logo.png'">
                 <span class="etiquetaCategoriaCatalogo categoria-${producto.categoria}">
                     ${nombreCategoria}
                 </span>
+                ${!tieneStock ? `
+                    <span class="etiquetaAgotado">
+                        <i class="bi bi-x-circle"></i> AGOTADO
+                    </span>
+                ` : ''}
             </div>
             <div class="contenidoTarjetaCatalogo">
                 <h3 class="tituloProductoCatalogo">${producto.nombre}</h3>
-                <p class="descripcionProductoCatalogo">${producto.descripcion}</p>
+                <p class="descripcionProductoCatalogo">${producto.descripcion || 'Sin descripción'}</p>
                 <div class="datoStockCatalogo">
                     <i class="bi bi-box-seam"></i>
-                    <span>${producto.stock > 0 ? `Stock: ${producto.stock}` : "Agotado"}</span>
+                    <span class="${tieneStock ? 'text-success' : 'text-danger'}">
+                        ${estadoTexto}
+                    </span>
                 </div>
                 <div class="pieTarjetaCatalogo">
                     <span class="precioProductoCatalogo">${formatearPrecio(producto.precio)}</span>
                     <button
-                        class="botonAgregarCarrito${producto.stock <= 0 ? " deshabilitado" : ""}"
-                        title="${producto.stock > 0 ? "Agregar al carrito" : "Sin stock disponible"}"
-                        ${producto.stock <= 0 ? "disabled" : ""}
+                        class="${botonClase}"
+                        title="${tieneStock ? "Agregar al carrito" : "Sin stock disponible"}"
+                        ${botonDisabled}
                         data-id="${producto.id}"
                         data-nombre="${producto.nombre}"
-                        data-descripcion="${producto.descripcion}"
+                        data-descripcion="${producto.descripcion || ''}"
                         data-precio="${producto.precio}"
-                        data-imagen="${producto.imagen}">
+                        data-imagen="${imagenSrc}">
                         <i class="bi bi-cart-plus-fill"></i>
                     </button>
                 </div>
@@ -92,85 +267,160 @@ function crearTarjetaProductoCatalogo(producto) {
     return columna;
 }
 
-// llenar categorias con los productos
+// ============================================
+// 7. RENDERIZAR CATÁLOGO
+// ============================================
 function renderizarCatalogo() {
+    // 🔥 FILTRAR PRODUCTOS: activos Y con stock > 0
     const productosActivos = productosCatalogo.filter(producto => {
         const texto = textoBusquedaCatalogo.toLowerCase();
         const coincideBusqueda =
             producto.nombre.toLowerCase().includes(texto) ||
             producto.descripcion.toLowerCase().includes(texto);
-        return producto.activo && coincideBusqueda;
+        
+        // Solo mostrar productos activos con stock disponible
+        return producto.activo && coincideBusqueda && producto.stock > 0;
     });
 
-    contadorCatalogoTotal.textContent =
-        productosCatalogo.filter(producto => producto.activo).length;
-
+    // 🔥 ACTUALIZAR CONTADORES
+    const totalDisponibles = productosCatalogo.filter(p => p.activo && p.stock > 0).length;
+    contadorCatalogoTotal.textContent = totalDisponibles;
     contadorCatalogoVisibles.textContent = productosActivos.length;
 
+    // 🔥 RECORRER CADA CATEGORÍA
     Object.keys(contenedoresPorCategoria).forEach(categoria => {
         const contenedor = contenedoresPorCategoria[categoria];
         const contadorTexto = contadoresPorCategoria[categoria];
 
         if (!contenedor) return;
         contenedor.innerHTML = "";
+        
         const productosCategoria = productosActivos.filter(
             producto => producto.categoria === categoria
         );
 
+        // 🔥 ACTUALIZAR CONTADOR DE CATEGORÍA
         if (contadorTexto) {
             contadorTexto.textContent =
                 `${productosCategoria.length} ${productosCategoria.length === 1 ? "producto disponible" : "productos disponibles"}`;
         }
 
+        // 🔥 SI NO HAY PRODUCTOS EN LA CATEGORÍA
         if (productosCategoria.length === 0) {
-            contenedor.innerHTML = `<p class="mensajeVacioSeccion">No hay productos en esta categoría por ahora.</p>`;
+            // Verificar si hay productos inactivos o sin stock en esta categoría
+            const hayProductosInactivos = productosCatalogo.some(p => 
+                p.categoria === categoria && (!p.activo || p.stock === 0)
+            );
+            
+            if (hayProductosInactivos) {
+                contenedor.innerHTML = `<p class="mensajeVacioSeccion">No hay productos disponibles en esta categoría. <br><small>Los productos están agotados o inactivos.</small></p>`;
+            } else {
+                contenedor.innerHTML = `<p class="mensajeVacioSeccion">No hay productos en esta categoría por ahora.</p>`;
+            }
             return;
         }
 
+        // 🔥 RENDERIZAR PRODUCTOS DE LA CATEGORÍA
         productosCategoria.forEach(producto => {
             contenedor.appendChild(crearTarjetaProductoCatalogo(producto));
         });
     });
 
-    // eventos botones
+    // 🔥 EVENTOS DE LOS BOTONES "AGREGAR AL CARRITO"
     document.querySelectorAll(".botonAgregarCarrito").forEach(boton => {
-        boton.addEventListener("click", function () {
-            const producto = {
-                id: this.dataset.id,
-                nombre: this.dataset.nombre,
-                descripcion: this.dataset.descripcion,
-                precio: parseFloat(this.dataset.precio),
-                imagen: this.dataset.imagen,
-                cantidad: 1
-            };
-            agregarAlCarrito(producto);
-        });
+        // Eliminar eventos anteriores para evitar duplicados
+        boton.removeEventListener("click", handleAgregarCarrito);
+        boton.addEventListener("click", handleAgregarCarrito);
     });
 }
 
-// agregar al carrito
-function agregarAlCarrito(producto) {
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    const existente = carrito.find(item => item.id === producto.id);
-    if (existente) {
-        existente.cantidad += 1;
 
-    } else {
-        carrito.push(producto);
-    }
-
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-    actualizarBadgeCarrito();
-    mostrarModalCarrito(producto.nombre);
+// ============================================
+// MANEJADOR DE CLICK PARA AGREGAR AL CARRITO
+// ============================================
+function handleAgregarCarrito(event) {
+    const boton = event.currentTarget;
+    const producto = {
+        id: boton.dataset.id,
+        nombre: boton.dataset.nombre,
+        descripcion: boton.dataset.descripcion,
+        precio: parseFloat(boton.dataset.precio),
+        imagen: boton.dataset.imagen,
+        cantidad: 1
+    };
+    agregarAlCarrito(producto);
 }
 
-// modal de confirmacion carrito
+// ============================================
+// 8. AGREGAR AL CARRITO (LOCALSTORAGE)
+// ============================================
+// function agregarAlCarrito(producto) {
+//     let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+//     const existente = carrito.find(item => item.id === producto.id);
+//     if (existente) {
+//         existente.cantidad += 1;
+//     } else {
+//         carrito.push(producto);
+//     }
+
+//     localStorage.setItem("carrito", JSON.stringify(carrito));
+//     actualizarBadgeCarrito();
+//     mostrarModalCarrito(producto.nombre);
+    
+//     document.dispatchEvent(new CustomEvent('carritoActualizado'));
+// }
+
+// ============================================
+// 8. AGREGAR AL CARRITO (BACKEND)
+// ============================================
+async function agregarAlCarrito(producto) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Debes iniciar sesión para agregar productos al carrito');
+        window.location.href = '../inicio_sesion/inicio_sesion.html';
+        return;
+    }
+
+    try {
+        console.log('🛒 Agregando al carrito:', producto);
+
+        // 1. Agregar al backend usando el servicio
+        const result = await agregarAlCarritoBackend(producto.id, 1);
+        
+        if (!result.success) {
+            throw new Error(result.error);
+        }
+
+        console.log('✅ Producto agregado exitosamente');
+
+        // 2. Sincronizar carrito local con backend
+        await sincronizarCarritoLocalConBackend();
+
+        // 3. Actualizar badge
+        actualizarBadgeCarrito();
+
+        // 4. Mostrar modal de confirmación
+        mostrarModalCarrito(producto.nombre);
+
+        // 5. 🔥 DISPARAR EVENTO PARA ACTUALIZAR EL CARRITO EN TIEMPO REAL
+        document.dispatchEvent(new CustomEvent('carritoActualizado'));
+
+        console.log('✅ Evento carritoActualizado disparado');
+
+    } catch (error) {
+        console.error('❌ Error al agregar al carrito:', error);
+        alert('Error al agregar producto al carrito: ' + error.message);
+    }
+}
+
+// ============================================
+// 9. MODAL DE CONFIRMACIÓN
+// ============================================
 function mostrarModalCarrito(nombreProducto) {
     const modalExistente = document.getElementById("modalCarritoKumo");
     if (modalExistente) modalExistente.remove();
 
     const modal = document.createElement("div");
-
     modal.id = "modalCarritoKumo";
     modal.style.cssText = `
         position: fixed;
@@ -203,7 +453,6 @@ function mostrarModalCarrito(nombreProducto) {
             border: 1px solid rgba(255, 0, 127, 0.18);
             animation: slideUp 0.3s ease;
         ">
-
             <div style="
                 width: 64px;
                 height: 64px;
@@ -219,7 +468,6 @@ function mostrarModalCarrito(nombreProducto) {
             ">
                 <i class="bi bi-bag-check-fill"></i>
             </div>
-
             <h3 style="
                 color: #1E1B4B;
                 font-size: 1.45rem;
@@ -229,7 +477,6 @@ function mostrarModalCarrito(nombreProducto) {
             ">
                 ¡Agregado al carrito!
             </h3>
-
             <p style="
                 color: #4B5563;
                 font-size: 0.98rem;
@@ -239,7 +486,6 @@ function mostrarModalCarrito(nombreProducto) {
                 <strong style="color: #1E1B4B;">"${nombreProducto}"</strong>
                 se agregó correctamente.
             </p>
-
             <div style="
                 display: flex;
                 gap: 12px;
@@ -247,7 +493,6 @@ function mostrarModalCarrito(nombreProducto) {
                 justify-content: center;
                 width: 100%;
             ">
-
                 <button onclick="cerrarModalCarrito()" style="
                     flex: 1;
                     min-width: 145px;
@@ -271,7 +516,6 @@ function mostrarModalCarrito(nombreProducto) {
                 ">
                     Seguir comprando
                 </button>
-
                 <a href="../carrito/carrito.html" style="
                     flex: 1;
                     min-width: 145px;
@@ -302,7 +546,6 @@ function mostrarModalCarrito(nombreProducto) {
                     Ir al carrito
                     <i class="bi bi-cart3"></i>
                 </a>
-
             </div>
         </div>
     `;
@@ -319,7 +562,9 @@ function cerrarModalCarrito() {
     if (modal) modal.remove();
 }
 
-// actualizar navbar
+// ============================================
+// 10. ACTUALIZAR BADGE DEL CARRITO
+// ============================================
 function actualizarBadgeCarrito() {
     const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     const totalItems = carrito.reduce((suma, item) => suma + item.cantidad, 0);
@@ -329,9 +574,18 @@ function actualizarBadgeCarrito() {
     if (cantidadServicios) cantidadServicios.textContent = totalItems;
 }
 
-// animacion modal
-const estilosModalCatalogo = document.createElement("style");
+// ============================================
+// 11. MOSTRAR/OCULTAR BOTÓN DE LIMPIAR
+// ============================================
+function actualizarBotonLimpiarBusqueda() {
+    if (!btnLimpiarBusquedaCatalogo) return;
+    btnLimpiarBusquedaCatalogo.classList.toggle("visible", inputBuscadorCatalogo.value.trim().length > 0);
+}
 
+// ============================================
+// 12. ESTILOS DEL MODAL
+// ============================================
+const estilosModalCatalogo = document.createElement("style");
 estilosModalCatalogo.textContent = `
     @keyframes fadeIn {
         from { opacity: 0; }
@@ -342,53 +596,53 @@ estilosModalCatalogo.textContent = `
         to { transform: translateY(0); opacity: 1; }
     }
 `;
-
 document.head.appendChild(estilosModalCatalogo);
 
-// mostrar u ocultar el botón de limpiar según el contenido del buscador
-function actualizarBotonLimpiarBusqueda() {
-    if (!btnLimpiarBusquedaCatalogo) return;
-    btnLimpiarBusquedaCatalogo.classList.toggle("visible", inputBuscadorCatalogo.value.trim().length > 0);
-}
-
-// buscador
-inputBuscadorCatalogo.addEventListener("input", function () {
-    textoBusquedaCatalogo = this.value.trim();
+// ============================================
+// 13. EVENTO DE BÚSQUEDA (MEJORADO)
+// ============================================
+inputBuscadorCatalogo.addEventListener("input", async function () {
+    const termino = this.value.trim();
+    textoBusquedaCatalogo = termino;
     actualizarBotonLimpiarBusqueda();
-    renderizarCatalogo();
+    
+    clearTimeout(window.busquedaTimeout);
+    window.busquedaTimeout = setTimeout(async () => {
+        if (termino.length >= 2 || termino.length === 0) {
+            const productosBackend = await buscarProductosBackend(termino);
+            // 🔥 TRANSFORMAR Y FILTRAR PRODUCTOS
+            productosCatalogo = productosBackend
+                .map(transformarProductoBackend)
+                .filter(p => p.activo && p.stock > 0); // 🔥 SOLO PRODUCTOS DISPONIBLES
+            renderizarCatalogo();
+        }
+    }, 300);
 });
 
-// limpiar búsqueda con el botón de escoba
+// ============================================
+// 14. LIMPIAR BÚSQUEDA
+// ============================================
 if (btnLimpiarBusquedaCatalogo) {
-    btnLimpiarBusquedaCatalogo.addEventListener("click", () => {
+    btnLimpiarBusquedaCatalogo.addEventListener("click", async () => {
         inputBuscadorCatalogo.value = "";
         textoBusquedaCatalogo = "";
         actualizarBotonLimpiarBusqueda();
+        
+        await cargarProductosCatalogo();
         renderizarCatalogo();
         inputBuscadorCatalogo.focus();
     });
 }
 
-// sincronizacion con admin
-window.addEventListener("storage", (evento) => {
-
-    if (evento.key === CLAVE_PRODUCTOS_KUMO) {
-
-        cargarProductosCatalogo();
-        renderizarCatalogo();
-    }
-});
-
-// sincronizacion en la misma pestaña como por ejemplo al comprar desde el carrito desplegable
-document.addEventListener("productosKumoActualizados", () => {
-    cargarProductosCatalogo();
-    renderizarCatalogo();
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    cargarProductosCatalogo();
+// ============================================
+// 15. INICIALIZACIÓN
+// ============================================
+document.addEventListener("DOMContentLoaded", async () => {
+    console.log('🚀 Cargando catálogo...');
+    
+    await cargarProductosCatalogo();
+    
     const parametrosUrl = new URLSearchParams(window.location.search);
-
     const terminoBusqueda = parametrosUrl.get("buscar");
 
     if (terminoBusqueda) {
@@ -399,4 +653,62 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarBotonLimpiarBusqueda();
     renderizarCatalogo();
     actualizarBadgeCarrito();
+    
+    console.log('✅ Catálogo cargado con', productosCatalogo.length, 'productos');
 });
+
+
+
+// ============================================
+// 16. SINCRONIZACIÓN CON LOCALSTORAGE
+// ============================================
+window.addEventListener("storage", (evento) => {
+    if (evento.key === CLAVE_PRODUCTOS_KUMO) {
+        cargarProductosCatalogo();
+        renderizarCatalogo();
+    }
+});
+
+document.addEventListener("productosKumoActualizados", () => {
+    cargarProductosCatalogo();
+    renderizarCatalogo();
+});
+
+// ============================================
+// 17. FORZAR REFRESH DEL CATÁLOGO
+// ============================================
+async function forzarRefreshCatalogo() {
+    console.log('🔄 Forzando refresh del catálogo...');
+    // Limpiar caché
+    localStorage.removeItem(CLAVE_PRODUCTOS_KUMO);
+    localStorage.removeItem(`${CLAVE_PRODUCTOS_KUMO}_time`);
+    // Recargar productos desde el backend
+    await cargarProductosCatalogo(true);
+    renderizarCatalogo();
+    console.log('✅ Catálogo refrescado correctamente');
+}
+
+// ============================================
+// 18. FORZAR RECARGA DE PRODUCTOS (ALIAS)
+// ============================================
+function forzarRecargaProductos() {
+    forzarRefreshCatalogo();
+}
+
+// ============================================
+// 19. ESCUCHAR EVENTO DE PRODUCTOS ACTUALIZADOS (ÚNICO)
+// ============================================
+document.addEventListener('productosActualizados', async function() {
+    console.log('🔄🔴 EVENTO RECIBIDO EN CATÁLOGO: productosActualizados');
+    await forzarRefreshCatalogo();
+});
+
+// ============================================
+// 20. EXPORTAR FUNCIONES GLOBALES
+// ============================================
+window.forzarRefreshCatalogo = forzarRefreshCatalogo;
+window.forzarRecargaProductos = forzarRecargaProductos;
+window.cargarProductosCatalogo = cargarProductosCatalogo;
+window.renderizarCatalogo = renderizarCatalogo;
+
+console.log('✅ catalogo.js cargado correctamente');

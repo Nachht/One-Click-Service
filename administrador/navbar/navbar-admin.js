@@ -22,11 +22,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function cerrarSesion() {
-        console.log("🚪 Cerrando sesión...");
-        localStorage.removeItem("usuarioActivo");
-        localStorage.removeItem("kumo_usuario");
-        window.location.href = "../../inicio_sesion/inicio_sesion.html";
-    }
+    console.log("🚪 Cerrando sesión...");
+    
+    // Limpiar datos de sesión
+    localStorage.removeItem("usuarioActivo");
+    localStorage.removeItem("kumo_usuario");
+    localStorage.removeItem("token");
+    // Opcional: eliminar carrito al cerrar sesión
+    // localStorage.removeItem("carrito");
+    
+    console.log("✅ Sesión cerrada correctamente");
+    
+    // 🔥 REDIRIGIR AL INDEX
+    window.location.href = "../../inicio/index.html";
+}
 
 
     // 2. GENERAR NAVBAR ADMIN
@@ -49,88 +58,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
             userHTML = `
                 <div class="dropdown">
-                    <button class="btn-user-dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                        background: rgba(255,255,255,0.08);
-                        border: 1px solid rgba(255,255,255,0.15);
-                        border-radius: 50px;
-                        padding: 9px 16px 9px 12px;
-                        color: #fff;
-                        font-weight: 600;
-                        font-size: 0.9rem;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                    " onmouseover="this.style.background='rgba(255,255,255,0.15)'; this.style.borderColor='rgba(255,255,255,0.25)';"
-                       onmouseout="this.style.background='rgba(255,255,255,0.08)'; this.style.borderColor='rgba(255,255,255,0.15)';">
+                    <button class="btn-user-dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-person-circle" style="font-size: 1.2rem; color: #FD0C7D;"></i>
                         <span>${primerNombre}</span>
                         <i class="bi bi-chevron-down" style="font-size: 0.7rem; color: rgba(255,255,255,0.4);"></i>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end" style="
-                        border-radius: 12px;
-                        border: 1px solid rgba(255,255,255,0.1);
-                        box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-                        padding: 8px;
-                        min-width: 200px;
-                        background: #1a1a2e;
-                    ">
+                    <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a class="dropdown-item" href="../../perfil/perfil.html" style="
-                                border-radius: 8px;
-                                padding: 8px 12px;
-                                color: rgba(255,255,255,0.8);
-                                font-weight: 500;
-                                text-decoration: none;
-                                display: flex;
-                                align-items: center;
-                                gap: 10px;
-                                transition: all 0.2s ease;
-                            " onmouseover="this.style.background='rgba(131,22,237,0.2)'; this.style.color='#fff';"
-                               onmouseout="this.style.background='transparent'; this.style.color='rgba(255,255,255,0.8)';">
-                                <i class="bi bi-person"></i> Mi perfil
+                            <a class="dropdown-item" href="../../perfil/perfil.html"></i> Mi perfil
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="../html/admin-servicios.html" >
+                                <i class="bi bi-shield-lock"></i> Admin Productos
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="../html/admin-pedidos.html">
+                                <i class="bi bi-box-seam"></i> Admin Pedidos
                             </a>
                         </li>
                         <li>
                             <hr class="dropdown-divider" style="border-color: rgba(255,255,255,0.06);">
                         </li>
                         <li>
-                            <a class="dropdown-item" href="../html/admin-servicios.html" style="
-                                border-radius: 8px;
-                                padding: 8px 12px;
-                                color: rgba(255,255,255,0.8);
-                                font-weight: 500;
-                                text-decoration: none;
-                                display: flex;
-                                align-items: center;
-                                gap: 10px;
-                                transition: all 0.2s ease;
-                            " onmouseover="this.style.background='rgba(131,22,237,0.2)'; this.style.color='#fff';"
-                               onmouseout="this.style.background='transparent'; this.style.color='rgba(255,255,255,0.8)';">
-                                <i class="bi bi-shield-lock"></i> Panel Admin
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider" style="border-color: rgba(255,255,255,0.06);">
-                        </li>
-                        <li>
-                            <button class="dropdown-item text-danger" onclick="cerrarSesion()" style="
-                                border-radius: 8px;
-                                padding: 8px 12px;
-                                color: #FD0C7D !important;
-                                font-weight: 500;
-                                border: none;
-                                background: transparent;
-                                width: 100%;
-                                text-align: left;
-                                display: flex;
-                                align-items: center;
-                                gap: 10px;
-                                transition: all 0.2s ease;
-                                cursor: pointer;
-                            " onmouseover="this.style.background='rgba(253,12,125,0.15)';"
-                               onmouseout="this.style.background='transparent';">
+                            <button class="dropdown-item text-danger" onclick="cerrarSesion()" >
                                 <i class="bi bi-box-arrow-right"></i> Cerrar sesión
                             </button>
                         </li>
@@ -141,40 +96,9 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             console.log('❌ Usuario NO logueado, mostrando login/registro');
             userHTML = `
-                <a href="../../inicio_sesion/inicio_sesion.html" class="btn-login" style="
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 6px;
-                    background: transparent;
-                    color: #fff !important;
-                    border: 2px solid rgba(255,255,255,0.2);
-                    padding: 9px 18px;
-                    border-radius: 50px;
-                    font-weight: 600;
-                    font-size: 0.85rem;
-                    text-decoration: none;
-                    transition: all 0.3s ease;
-                    white-space: nowrap;
-                " onmouseover="this.style.borderColor='#FD0C7D'; this.style.background='rgba(253,12,125,0.1)';"
-                   onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.background='transparent';">
-                    <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                <a href="../../inicio_sesion/inicio_sesion.html" class="btn-login"></i> Iniciar sesión
                 </a>
-                <a href="../../registro/registro.html" class="btn-registro" style="
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 6px;
-                    background: linear-gradient(90deg, #8316ED, #FD0C7D);
-                    color: #fff !important;
-                    border: none;
-                    padding: 9px 18px;
-                    border-radius: 50px;
-                    font-weight: 600;
-                    font-size: 0.85rem;
-                    text-decoration: none;
-                    transition: all 0.3s ease;
-                    white-space: nowrap;
-                " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 4px 15px rgba(253,12,125,0.3)';"
-                   onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                <a href="../../registro/registro.html" class="btn-registro" >
                     <i class="bi bi-person-plus"></i> Registrarse
                 </a>
             `;
@@ -189,22 +113,22 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="container-kumo">
                         <div class="nav-top">
                             <!-- LOGO -->
-                            <a href="../../inicio/index.html" class="logo-link" style="display: flex; align-items: center; gap: 8px; text-decoration: none; flex-shrink: 0;">
+                            <a href="../../inicio/index.html" class="logo-link">
                                 <img src="../../assets/img/logo.png" alt="KUMO" class="logo-img" style="height: 50px; width: 50px; display: block;">
                             </a>
                             
                             
 
                             <!-- ÍCONOS -->
-                            <div class="nav-icons" style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+                            <div class="nav-icons" >
                                 <!-- Menú de usuario -->
-                                <div class="user-menu-container" id="adminUserMenu" style="display: flex; align-items: center; gap: 10px;">
+                                <div class="user-menu-container" id="adminUserMenu" >
                                     ${userHTML}
                                 </div>
                                 
                                 <!-- Volver a la tienda -->
-                                <a href="../../inicio/index.html" class="icon-link" title="Volver a la tienda" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; line-height: 1; flex-shrink: 0; overflow: hidden; color: #D5D5D5; text-decoration: none; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;" onmouseover="this.style.background='rgba(131,22,237,0.18)'; this.style.borderColor='rgba(131,22,237,0.45)'; this.style.color='#8316ED';" onmouseout="this.style.background='rgba(255,255,255,0.06)'; this.style.borderColor='rgba(255,255,255,0.12)'; this.style.color='#D5D5D5';">
-                                    <i class="bi bi-shop" style="display: flex; align-items: center; justify-content: center; font-size: 1.2rem; line-height: 1; margin: 0;"></i>
+                                <a href="../../inicio/index.html" class="icon-link" title="Volver a la tienda"  >
+                                    <i class="bi bi-shop" ></i>
                                 </a>
                             </div>
                         </div>

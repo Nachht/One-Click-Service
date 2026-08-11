@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos | Kumo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="icon" href="../../assets/img/logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/admin-servicios.css">
+    <link rel="stylesheet" href="../footer/footer_admin.css">
+    <link rel="stylesheet" href="../../estilos-css/navbar.CSS" />
+    <link rel="stylesheet" href="../footer/footer_admin.CSS" />
+    
+    <link rel="stylesheet" href="../css/admin-pedidos.css" />
+    <link rel="icon" href="../../assets/img/logo.png" />
+</head>
+
+<body>
+
+    <!-- Botón menú -->
+    <div id="navbar-container"></div>
+
+    <section class="pedidos-container" aria-label="Gestión de pedidos">
+        <!-- Encabezado -->
+        <header class="encabezadoPedidos">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <h1>Gestión de Pedidos</h1>
+                    <p>Administra todos los pedidos de la tienda.</p>
+                </div>
+                <div>
+                    <span class="badge badgePedidos">
+                        <i class="bi bi-box-seam"></i>
+                        Total: <span id="contadorPedidosTotal">0</span> pedidos
+                    </span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Barra de herramientas -->
+        <div class="barraHerramientasPedidos">
+            <div class="buscadorPedidos">
+                <i class="bi bi-search iconoBuscadorPedidos"></i>
+                <input type="text" id="buscadorPedidos" placeholder="Buscar por ID de pedido o cliente...">
+                <button type="button" id="btnLimpiarBusquedaPedidos" class="kumoBotonLimpiarBusquedaPedidos" title="Limpiar búsqueda">
+                    <i class="fa-solid fa-broom"></i>
+                </button>
+            </div>
+
+            <!-- Filtros por estado -->
+            <div class="grupoFiltrosPedidos">
+                <button id="filtroTodos" class="btn btnFiltroPedido activo">
+                    <i class="bi bi-grid"></i> Todos
+                </button>
+                <button id="filtroPendiente" class="btn btnFiltroPedido">
+                    <i class="bi bi-clock"></i> Pendientes
+                </button>
+                <button id="filtroConfirmado" class="btn btnFiltroPedido">
+                    <i class="bi bi-check-circle"></i> Confirmados
+                </button>
+                <button id="filtroEnviado" class="btn btnFiltroPedido">
+                    <i class="bi bi-truck"></i> Enviados
+                </button>
+                <button id="filtroEntregado" class="btn btnFiltroPedido">
+                    <i class="bi bi-box-seam"></i> Entregados
+                </button>
+                <button id="filtroCancelado" class="btn btnFiltroPedido">
+                    <i class="bi bi-x-circle"></i> Cancelados
+                </button>
+            </div>
+        </div>
+
+        <!-- Contador -->
+        <div class="contadorResultadosPedidos">
+            Mostrando <span id="contadorPedidosVisibles">0</span> pedidos
+        </div>
+
+        <!-- Tabla de pedidos -->
+        <div class="tablaPedidosContainer">
+            <div id="contenedorPedidosAdmin">
+                <!-- JS inyectará la tabla aquí -->
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL VER DETALLE PEDIDO -->
+    <div id="modalDetallePedido" class="fondoModal">
+        <div class="ventanaModal ventanaModalGrande">
+            <div class="encabezadoModal">
+                <h2 id="tituloDetallePedido">Detalle del pedido</h2>
+                <button id="cerrarModalDetalle" class="botonCerrarModal">&times;</button>
+            </div>
+            <div id="contenidoDetallePedido">
+                <!-- JS inyectará el contenido -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CONFIRMAR CAMBIO DE ESTADO -->
+    <div id="modalConfirmarEstadoPedido" class="fondoModal">
+        <div class="ventanaModal ventanaModalConfirmacion">
+            <div class="encabezadoModal">
+                <h2 id="tituloConfirmarEstadoPedido">Cambiar estado</h2>
+                <button id="cerrarModalConfirmarEstadoPedido" class="botonCerrarModal">&times;</button>
+            </div>
+            <p id="mensajeConfirmarEstadoPedido" class="mensajeConfirmarEstado"></p>
+            <div class="accionesConfirmarEstado">
+                <button id="btnCancelarCambioEstadoPedido" class="botonCancelarEstado">Cancelar</button>
+                <button id="btnConfirmarCambioEstadoPedido" class="botonConfirmarEstado">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="../navbar/navbar-admin.js"></script>
+    <script src="../footer/footer_admin.js"></script>
+    <script src="../js/admin-pedidos.js"></script>
+
+</body>
+
+</html>

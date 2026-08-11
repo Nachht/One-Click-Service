@@ -1,0 +1,453 @@
+/* ============================================
+   ESTILOS PARA PÁGINA DE PEDIDOS
+   ============================================ */
+
+/* --- GENERAL --- */
+body {
+    background: #f8f7fc;
+    font-family: 'Nunito', sans-serif;
+}
+
+.titulo-pedidos {
+    font-weight: 900;
+    color: #1E1B4B;
+    font-size: 2.2rem;
+}
+
+/* --- FILTROS --- */
+.filtros-pedidos {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-filtro {
+    background: white;
+    border: 2px solid #E5E7EB;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #4B5563;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-filtro:hover {
+    border-color: #8A2BE2;
+    color: #1E1B4B;
+}
+
+.btn-filtro.activo {
+    background: linear-gradient(135deg, #8A2BE2 0%, #FF007F 100%);
+    color: white;
+    border-color: #8A2BE2;
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.25);
+}
+
+/* --- TARJETA DE PEDIDO --- */
+.tarjeta-pedido {
+    background: white;
+    border-radius: 16px;
+    padding: 20px 24px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.tarjeta-pedido:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+/* --- CABECERA DEL PEDIDO --- */
+.cabecera-pedido {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #F3F4F6;
+}
+
+.numero-pedido {
+    font-weight: 800;
+    color: #1E1B4B;
+    font-size: 1.05rem;
+}
+
+.fecha-pedido {
+    color: #6B7280;
+    font-size: 0.85rem;
+}
+
+.estado-pedido {
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.estado-pendiente {
+    background: #FEF3C7;
+    color: #D97706;
+}
+
+.estado-enviado {
+    background: #DBEAFE;
+    color: #2563EB;
+}
+
+.estado-entregado {
+    background: #D1FAE5;
+    color: #059669;
+}
+
+.estado-cancelado {
+    background: #FEE2E2;
+    color: #DC2626;
+}
+
+/* --- PRODUCTOS DEL PEDIDO --- */
+.productos-pedido {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.producto-pedido-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    background: #F9FAFB;
+    border-radius: 10px;
+}
+
+.producto-pedido-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.producto-pedido-item .info {
+    flex: 1;
+}
+
+.producto-pedido-item .nombre {
+    font-weight: 700;
+    color: #1E1B4B;
+    font-size: 0.9rem;
+}
+
+.producto-pedido-item .detalle {
+    font-size: 0.8rem;
+    color: #6B7280;
+}
+
+/* --- PIE DEL PEDIDO --- */
+.pie-pedido {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 15px;
+    border-top: 1px solid #F3F4F6;
+}
+
+.total-pedido {
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: #1E1B4B;
+}
+
+.total-pedido span {
+    color: #FF007F;
+}
+
+/* --- BOTÓN CANCELAR --- */
+.btn-cancelar-pedido {
+    background: transparent;
+    border: 1px solid #EF4444;
+    color: #EF4444;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cancelar-pedido:hover {
+    background: #EF4444;
+    color: white;
+}
+
+.btn-cancelar-pedido:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .titulo-pedidos {
+        font-size: 1.6rem;
+    }
+
+    .cabecera-pedido {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .pie-pedido {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filtros-pedidos {
+        gap: 6px;
+    }
+
+    .btn-filtro {
+        font-size: 0.75rem;
+        padding: 6px 14px;
+    }
+
+    .producto-pedido-item {
+        flex-wrap: wrap;
+    }
+}
+
+/* ============================================
+   BOTÓN GRADIENTE KUMO (REUTILIZADO)
+   ============================================ */
+.btn-gradient-kumo {
+    background: linear-gradient(135deg, #8A2BE2 0%, #FF007F 100%);
+    color: white;
+    border: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-gradient-kumo:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 0, 127, 0.3);
+    color: white;
+}
+
+
+/* ============================================
+   MODAL KUMO - ESTILOS COMPARTIDOS
+   ============================================ */
+
+.modal-kumo-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 12, 24, 0.72);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-kumo-overlay.activo {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-kumo-box {
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 32px 30px 28px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 45px rgba(131, 1, 148, 0.69), 0 0 35px rgba(255, 0, 127, 0.20);
+    border: 1px solid rgba(255, 0, 127, 0.18);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.modal-kumo-overlay.activo .modal-kumo-box {
+    transform: scale(1);
+}
+
+.modal-kumo-icono {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8A2BE2 0%, #FF007F 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 29px;
+    box-shadow: 0 8px 22px rgba(255, 0, 127, 0.30);
+}
+
+.modal-kumo-icono.icono-vacio {
+    background: #f3f4f6;
+    color: #9ca3af;
+    box-shadow: none;
+}
+
+.modal-kumo-icono.icono-exito {
+    background: #10B981;
+    box-shadow: 0 8px 22px rgba(16, 185, 129, 0.30);
+}
+
+.modal-kumo-titulo {
+    color: #1E1B4B;
+    font-size: 1.45rem;
+    font-weight: 800;
+    margin: 0 0 10px;
+    letter-spacing: 0.2px;
+}
+
+.modal-kumo-mensaje {
+    color: #4B5563;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    margin: 0 auto 26px;
+}
+
+.modal-kumo-total {
+    color: #FF007F;
+    font-weight: 800;
+    font-size: 1.2rem;
+}
+
+.modal-kumo-botones {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.modal-kumo-btn-cancelar {
+    flex: 1;
+    min-width: 145px;
+    background: #ffffff;
+    border: 1px solid #D1D5DB;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #1E1B4B;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.modal-kumo-btn-cancelar:hover {
+    background: #F3F4F6;
+    border-color: #A855F7;
+}
+
+.modal-kumo-btn-confirmar {
+    flex: 1;
+    min-width: 145px;
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #FFFFFF;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.25);
+    transition: all 0.25s ease;
+}
+
+.modal-kumo-btn-confirmar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 11px 25px rgba(239, 68, 68, 0.35);
+}
+
+.modal-kumo-btn-ok {
+    flex: 1;
+    min-width: 145px;
+    background: linear-gradient(135deg, #8A2BE2 0%, #FF007F 100%);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #FFFFFF;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 0, 127, 0.25);
+    transition: all 0.25s ease;
+}
+
+.modal-kumo-btn-ok:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 11px 25px rgba(255, 0, 127, 0.35);
+}
+
+/* ============================================
+   CAMPOS DEL MODAL KUMO
+   ============================================ */
+
+#modalKumoCampos {
+    margin: 15px 0 20px 0;
+}
+
+#modalKumoCampos input,
+#modalKumoCampos select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #E5E7EB;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-family: 'Nunito', sans-serif;
+    transition: all 0.3s ease;
+    background: #F9FAFB;
+}
+
+#modalKumoCampos input:focus,
+#modalKumoCampos select:focus {
+    outline: none;
+    border-color: #8A2BE2;
+    box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1);
+    background: #ffffff;
+}
+
+#modalKumoCampos input:hover,
+#modalKumoCampos select:hover {
+    border-color: #A855F7;
+}
+
+#modalKumoCampos label {
+    display: block;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #1E1B4B;
+    margin-bottom: 6px;
+}
+
+#modalKumoCampos select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+    cursor: pointer;
+}
